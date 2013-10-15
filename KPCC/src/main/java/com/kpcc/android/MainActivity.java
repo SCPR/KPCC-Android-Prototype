@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
+
     public final static String EXTRA_MESSAGE = "com.kpcc.android.MESSAGE";
+
 
     public void sendMessage(View view) {
         Intent intent      = new Intent(this, DisplayMessageActivity.class);
@@ -19,14 +21,6 @@ public class MainActivity extends Activity {
 
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
-
-    }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 
 
@@ -36,21 +30,31 @@ public class MainActivity extends Activity {
             case R.id.action_search:
                 openSearch();
                 return true;
+
             case R.id.action_settings:
                 openSettings();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
+
         }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate tzhe menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_actions, menu);
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
     }
 
 
