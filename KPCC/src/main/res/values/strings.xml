@@ -7,5 +7,5 @@
     <string name="button_send">Send</string>
     <string name="edit_message">Edit Me!</string>
     <string name="title_activity_display_message">Message</string>
-
+    <string name="action_search">Search</string>
 </resources>
