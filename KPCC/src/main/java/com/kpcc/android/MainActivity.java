@@ -8,6 +8,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 public class MainActivity extends Activity {
 
@@ -26,7 +30,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_search:
                 openSearch();
                 return true;
@@ -54,7 +58,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getArticles();
         setContentView(R.layout.activity_main);
+    }
+
+
+    private void getArticles() {
+        KPCCRestClient.get("articles", null, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                System.out.println(response);
+            }
+        });
     }
 
 
