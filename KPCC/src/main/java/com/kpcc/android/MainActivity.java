@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
@@ -17,17 +17,6 @@ import org.json.JSONException;
 public class MainActivity extends Activity {
 
     public final static String EXTRA_MESSAGE = "com.kpcc.android.MESSAGE";
-
-
-    public void sendMessage(View view) {
-        Intent intent      = new Intent(this, DisplayMessageActivity.class);
-        EditText editText  = (EditText) findViewById(R.id.edit_message);
-        String message     = editText.getText().toString();
-
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -60,7 +49,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getArticles();
-        setContentView(R.layout.activity_main);
     }
 
 
@@ -68,7 +56,9 @@ public class MainActivity extends Activity {
         KPCCRestClient.get("articles", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
-                System.out.println(response);
+                TextView textView  = new TextView(this);
+                textView.setText(response);
+                setContentView(textView);
             }
         });
     }
