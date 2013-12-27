@@ -49,16 +49,16 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getArticles();
-    }
+        setContentView(R.layout.activity_main);
+}
 
 
     private void getArticles() {
         KPCCRestClient.get("articles", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(JSONObject response) {
-                TextView textView  = new TextView(this);
-                textView.setText(response);
-                setContentView(textView);
+                JSONObject firstArticle = response.get("articles").get(0);
+                String headline = firstArticle.getString("headline");
             }
         });
     }
