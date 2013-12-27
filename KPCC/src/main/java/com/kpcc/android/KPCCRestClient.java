@@ -15,4 +15,5 @@ public class KPCCRestClient {
     private static String getAbsoluteUrl(String relativeUrl) {
         return BASE_URI + relativeUrl;
     }
+
 }
