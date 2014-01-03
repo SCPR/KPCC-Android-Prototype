@@ -1,4 +1,4 @@
-package com.kpcc.android;
+package org.kpcc.reader;
 
 import java.net.HttpURLConnection;
 import java.io.InputStream;
@@ -23,9 +23,7 @@ import org.json.JSONObject;
 
 
 public class ArticlesActivity extends Activity {
-    public final String DEBUG_TAG = "Articles";
-    public final String API_ROOT = "http://scpr.org/api/v3/";
-    public final String ENDPOINT = "articles";
+    public final String TAG = "Articles";
 
     private TextView textView;
 
@@ -37,9 +35,10 @@ public class ArticlesActivity extends Activity {
 
         textView = (TextView) findViewById(R.id.articles);
 
+        // Get the connection status to make sure we have internet
+        // before trying to make the API request.
         ConnectivityManager connMgr = (ConnectivityManager) 
             getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -49,11 +48,6 @@ public class ArticlesActivity extends Activity {
         }
     }
 
-
-
-    private String apiUrl(String endpoint) {
-        return API_ROOT + endpoint;
-    }
 
 
     private class FetchArticlesTask extends AsyncTask<String, Void, String> {
@@ -66,49 +60,51 @@ public class ArticlesActivity extends Activity {
             }
         }
 
+
         @Override
         protected void onPostExecute(String result) {
             textView.setText(result);
         }
 
 
-        public String readIt(InputStream stream, int len)
+        private String fetchArticles(String strUrl) throws IOException {
+            InputStream is = null;
+
+            try {
+                URL url = new URL(strUrl);
+
+                HttpURLConnection conn =
+                    (HttpURLConnection) url.openConnection();
+
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+                conn.setRequestMethod("GET");
+                conn.setDoInput(true);
+
+                conn.connect();
+                int response = conn.getResponseCode();
+                Log.d(DEBUG_TAG, "The response is: " + response);
+                is = conn.getInputStream();
+
+                JSONArray articles = parseJson(is, 999);
+                return contentAsString;
+
+            } finally {
+                if (is != null) {
+                    is.close();
+                } 
+            }
+        }
+
+
+        public JSONArray parseJson(InputStream stream)
         throws IOException, UnsupportedEncodingException {
-           Reader reader = null;
-           reader = new InputStreamReader(stream, "UTF-8");
+            Reader reader = new InputStreamReader(stream, "UTF-8");
 
-           char[] buffer = new char[len];
-           reader.read(buffer);
-           return new String(buffer);
-       }
-
-
-       private String fetchArticles(String strUrl) throws IOException {
-           InputStream is = null;
-
-           try {
-               URL url = new URL(strUrl);
-
-               HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-               conn.setReadTimeout(10000);
-               conn.setConnectTimeout(15000);
-               conn.setRequestMethod("GET");
-               conn.setDoInput(true);
-
-               conn.connect();
-               int response = conn.getResponseCode();
-               Log.d(DEBUG_TAG, "The response is: " + response);
-               is = conn.getInputStream();
-
-               String contentAsString = readIt(is, 999);
-               return contentAsString;
-
-           } finally {
-               if (is != null) {
-                   is.close();
-               } 
-           }
-       }
+            char[] buffer = new char[len];
+            reader.read(buffer);
+            return new String(buffer);
+        }
 
     }
 }

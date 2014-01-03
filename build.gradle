@@ -1,1 +1,30 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.7.+'
+    }
+}
+
+apply plugin: 'android'
+
+android {
+    buildToolsVersion '19'
+    compileSdkVersion 19
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.loopj.android:android-async-http:1.4.+'
+}
+
+// Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.9'
+}
