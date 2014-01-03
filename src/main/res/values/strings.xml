@@ -1,5 +1,4 @@
 <resources>
-
     <string name="app_name">KPCC Reader</string>
-    <string name="articles">Articles</string>
+    <string name="articles_title">Articles</string>
 </resources>

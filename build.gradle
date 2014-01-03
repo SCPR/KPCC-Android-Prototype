@@ -2,6 +2,7 @@ buildscript {
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath 'com.android.tools.build:gradle:0.7.+'
     }
@@ -20,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.google.android:support-v4:r7'
     compile 'com.loopj.android:android-async-http:1.4.+'
 }
 
