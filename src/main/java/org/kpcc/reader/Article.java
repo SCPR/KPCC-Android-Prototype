@@ -3,14 +3,20 @@ package org.kpcc.reader;
 import org.json.*;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import android.util.Log;
 
 
 public class Article
 {
 
+    private final static String TAG = "Article";
+
     private String mId;
     private String mTitle;
-    private String mDate;
+    private Date mTimestamp;
+    private String mBody;
 
 
     public static Article buildFromJson(JSONObject jsonArticle)
@@ -21,8 +27,15 @@ public class Article
         {
             article.setId(jsonArticle.getString("id"));
             article.setTitle(jsonArticle.getString("title"));
-            article.setDate(jsonArticle.getString("published_at"));
+            article.setBody(jsonArticle.getString("body"));
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            Date timestamp = sdf.parse(jsonArticle.getString("published_at"));
+            article.setTimestamp(timestamp);
+
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -59,13 +72,25 @@ public class Article
     }
 
 
-    public String getDate()
+    public Date getTimestamp()
     {
-        return mDate;
+        return mTimestamp;
     }
 
-    public void setDate(String date)
+    public void setTimestamp(Date timestamp)
     {
-        mDate = date;
+        mTimestamp = timestamp;
     }
+
+
+    public String getBody()
+    {
+        return mBody;
+    }
+
+    public void setBody(String body)
+    {
+        mBody = body;
+    }
+
 }

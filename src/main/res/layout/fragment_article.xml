@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/article_title_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ARTICLE TITLE"
+        android:textSize="40sp"
+        android:fontFamily="Roboto"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/article_timestamp_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ARTICLE TIMESTAMP" />
+
+    <TextView
+        android:id="@+id/article_body_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ARTICLE BODY" />
+
+</LinearLayout>

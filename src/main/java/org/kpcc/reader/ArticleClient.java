@@ -19,6 +19,13 @@ public class ArticleClient
     }
 
 
+    public static void get(
+    String id, RequestParams params, AsyncHttpResponseHandler responseHandler)
+    {
+        client.get(getAbsoluteUrl(id), params, responseHandler);
+    }
+
+
     private static String getAbsoluteUrl(String relativeUrl)
     {
       return API_ROOT + ENDPOINT + relativeUrl;
