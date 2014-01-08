@@ -1,8 +1,8 @@
 package org.kpcc.reader;
 
-import java.util.ArrayList;
 import android.content.Context;
-import android.util.Log;
+
+import java.util.ArrayList;
 
 
 public class ArticleCollection

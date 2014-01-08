@@ -1,11 +1,11 @@
 package org.kpcc.reader;
 
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
-import android.util.Log;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class Article

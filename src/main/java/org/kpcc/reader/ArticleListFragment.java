@@ -1,19 +1,21 @@
 package org.kpcc.reader;
 
-import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-import org.json.*;
-import com.loopj.android.http.*;
-import android.support.v4.app.ListFragment;
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.ListView;
 import android.widget.ArrayAdapter;
-import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 
 
 public class ArticleListFragment extends ListFragment
