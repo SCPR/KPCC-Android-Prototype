@@ -30,6 +30,8 @@ public class ArticleListFragment extends ListFragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
         getActivity().setTitle(R.string.app_name);
 
         if (mArticles == null)
@@ -90,6 +92,7 @@ public class ArticleListFragment extends ListFragment
         Article a = ((ArticleAdapter)getListAdapter()).getItem(position);
         Intent i = new Intent(getActivity(), ArticleActivity.class);
         i.putExtra(ArticleFragment.EXTRA_ARTICLE_ID, a.getId());
+
         startActivity(i);
     }
 

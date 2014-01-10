@@ -24,7 +24,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
             <TextView
@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:textStyle="bold"
+                android:textSize="15sp"
                 android:text="ARTICLE BYLINE" />
 
             <TextView
@@ -42,6 +43,7 @@
                 android:layout_toRightOf="@id/article_byline_TextView"
                 android:gravity="right"
                 android:textStyle="italic"
+                android:textSize="15sp"
                 android:text="ARTICLE TIMESTAMP" />
 
         </RelativeLayout>
@@ -51,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
+            android:textSize="18sp"
             android:text="ARTICLE BODY" />
 
     </LinearLayout>
