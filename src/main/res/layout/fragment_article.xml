@@ -1,28 +1,58 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/article_title_textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ARTICLE TITLE"
-        android:textSize="40sp"
-        android:fontFamily="Roboto"
-        android:textStyle="bold" />
+        android:padding="5dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/article_timestamp_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ARTICLE TIMESTAMP" />
+        <TextView
+            android:id="@+id/article_title_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="ARTICLE TITLE"
+            android:lineSpacingMultiplier="0.8"
+            android:textSize="30sp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/article_body_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ARTICLE BODY" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/article_byline_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:text="ARTICLE BYLINE" />
+
+            <TextView
+                android:id="@+id/article_timestamp_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/article_byline_TextView"
+                android:gravity="right"
+                android:textStyle="italic"
+                android:text="ARTICLE TIMESTAMP" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/article_body_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="ARTICLE BODY" />
+
+    </LinearLayout>
+
+</ScrollView>

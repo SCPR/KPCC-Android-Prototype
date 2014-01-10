@@ -21,6 +21,7 @@ public class ArticleFragment extends Fragment
     private TextView mTitle;
     private TextView mBody;
     private TextView mTimestamp;
+    private TextView mByline;
 
 
     public static ArticleFragment newInstance(String articleId)
@@ -51,9 +52,11 @@ public class ArticleFragment extends Fragment
         mTitle      = (TextView)v.findViewById(R.id.article_title_textView);
         mBody       = (TextView)v.findViewById(R.id.article_body_textView);
         mTimestamp  = (TextView)v.findViewById(R.id.article_timestamp_textView);
+        mByline     = (TextView)v.findViewById(R.id.article_byline_TextView);
 
         mTitle.setText(mArticle.getTitle());
         mBody.setText(Html.fromHtml(mArticle.getBody()));
+        mByline.setText(mArticle.getByline());
 
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
         mTimestamp.setText(sdf.format(mArticle.getTimestamp()));

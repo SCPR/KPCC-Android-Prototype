@@ -15,7 +15,11 @@ public class Article
 
     private String mId;
     private String mTitle;
+    private String mShortTitle;
+    private String mPublicUrl;
+    private String mByline;
     private Date mTimestamp;
+    private String mTeaser;
     private String mBody;
 
 
@@ -27,6 +31,10 @@ public class Article
         {
             article.setId(jsonArticle.getString("id"));
             article.setTitle(jsonArticle.getString("title"));
+            article.setShortTitle(jsonArticle.getString("short_title"));
+            article.setPublicUrl(jsonArticle.getString("public_url"));
+            article.setByline(jsonArticle.getString("byline"));
+            article.setTeaser(jsonArticle.getString("teaser"));
             article.setBody(jsonArticle.getString("body"));
 
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -72,6 +80,39 @@ public class Article
     }
 
 
+    public String getShortTitle()
+    {
+        return mShortTitle;
+    }
+
+    public void setShortTitle(String shortTitle)
+    {
+        mShortTitle = shortTitle;
+    }
+
+
+    public String getPublicUrl()
+    {
+        return mPublicUrl;
+    }
+
+    public void setPublicUrl(String publicUrl)
+    {
+        mPublicUrl = publicUrl;
+    }
+
+
+    public String getByline()
+    {
+        return mByline;
+    }
+
+    public void setByline(String byline)
+    {
+        mByline = byline;
+    }
+
+
     public Date getTimestamp()
     {
         return mTimestamp;
@@ -80,6 +121,17 @@ public class Article
     public void setTimestamp(Date timestamp)
     {
         mTimestamp = timestamp;
+    }
+
+
+    public String getTeaser()
+    {
+        return mTeaser;
+    }
+
+    public void setTeaser(String teaser)
+    {
+        mTeaser = teaser;
     }
 
 
