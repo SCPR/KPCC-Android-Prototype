@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="ARTICLE TITLE"
-            android:lineSpacingMultiplier="0.8"
+            android:lineSpacingMultiplier="1"
             android:textSize="30sp"
             android:fontFamily="sans-serif-light"
             android:textStyle="bold" />

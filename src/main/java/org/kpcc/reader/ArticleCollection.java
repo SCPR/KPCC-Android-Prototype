@@ -57,4 +57,10 @@ public class ArticleCollection
     {
         mArticles.add(article);
     }
+
+
+    public int size()
+    {
+        return mArticles.size();
+    }
 }

@@ -3,6 +3,7 @@ package org.kpcc.reader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -34,12 +35,28 @@ public class ArticleListFragment extends ListFragment
 
         getActivity().setTitle(R.string.app_name);
 
-        if (mArticles == null)
+
+        mArticles = ArticleCollection.get(getActivity());
+
+        if (mArticles.size() == 0)
         {
             fetchArticles();
         } else {
             setupAdapter();
         }
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+    {
+        return super.onCreateView(inflater, parent, savedInstanceState);
+
+//        If we wanted to load the fragment_article_list template...
+//        This removes the default spinner behavior (and we'd have to implement it manually).
+//
+//        View v = inflater.inflate(R.layout.fragment_article_list, parent, false);
+//        return v;
     }
 
 
@@ -70,12 +87,10 @@ public class ArticleListFragment extends ListFragment
 
     public void addArticle(Article article)
     {
-        if (mArticles == null)
+        if (mArticles.getArticle(article.getId()) == null)
         {
-            mArticles = ArticleCollection.get(getActivity());
+            mArticles.add(article);
         }
-
-        mArticles.add(article);
     }
 
 
@@ -90,7 +105,7 @@ public class ArticleListFragment extends ListFragment
     public void onListItemClick(ListView l, View v, int position, long id)
     {
         Article a = ((ArticleAdapter)getListAdapter()).getItem(position);
-        Intent i = new Intent(getActivity(), ArticleActivity.class);
+        Intent i = new Intent(getActivity(), ArticlePagerActivity.class);
         i.putExtra(ArticleFragment.EXTRA_ARTICLE_ID, a.getId());
 
         startActivity(i);
@@ -127,8 +142,9 @@ public class ArticleListFragment extends ListFragment
 
             titleTextView.setText(a.getTitle());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
-            timestampTextView.setText(sdf.format(a.getTimestamp()));
+            SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy, h:mm aa");
+            String dateTime = sdf.format(a.getTimestamp());
+            timestampTextView.setText(dateTime);
 
             return convertView;
         }

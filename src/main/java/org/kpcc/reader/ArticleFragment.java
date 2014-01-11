@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 
 
 public class ArticleFragment extends Fragment
@@ -75,8 +74,11 @@ public class ArticleFragment extends Fragment
         mBody.setText(Html.fromHtml(mArticle.getBody()));
         mByline.setText(mArticle.getByline());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
-        mTimestamp.setText(sdf.format(mArticle.getTimestamp()));
+        java.text.DateFormat dateFormat = DateFormat.getLongDateFormat(getActivity().getApplicationContext());
+        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(getActivity().getApplicationContext());
+        String date = dateFormat.format(mArticle.getTimestamp());
+        String time = timeFormat.format(mArticle.getTimestamp());
+        mTimestamp.setText(date + ", " + time);
 
         return v;
     }

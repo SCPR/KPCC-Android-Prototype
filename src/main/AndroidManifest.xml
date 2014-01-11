@@ -36,7 +36,7 @@
         </activity>
 
         <activity
-            android:name=".ArticleActivity"
+            android:name=".ArticlePagerActivity"
             android:label="@string/app_name">
 
             <meta-data

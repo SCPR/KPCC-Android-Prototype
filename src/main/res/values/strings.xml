@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KPCC Reader</string>
     <string name="articles_title">Articles</string>
+    <string name="empty_list_articles">No articles are available.</string>
 </resources>

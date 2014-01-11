@@ -8,7 +8,7 @@ import com.loopj.android.http.RequestParams;
 public class ArticleClient
 {
 
-    public static final String API_ROOT = "http://scpr.org/api/v2/";
+    public static final String API_ROOT = "http://www.scpr.org/api/v2/";
     public static final String ENDPOINT = "articles";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
