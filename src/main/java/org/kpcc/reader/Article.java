@@ -1,10 +1,12 @@
 package org.kpcc.reader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -21,6 +23,7 @@ public class Article
     private Date mTimestamp;
     private String mTeaser;
     private String mBody;
+    private ArrayList<Asset> mAssets = new ArrayList<Asset>();
 
 
     public static Article buildFromJson(JSONObject jsonArticle)
@@ -40,6 +43,12 @@ public class Article
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
             Date timestamp = sdf.parse(jsonArticle.getString("published_at"));
             article.setTimestamp(timestamp);
+
+            JSONArray assets = jsonArticle.getJSONArray("assets");
+            for (int i=0; i < assets.length(); i++)
+            {
+                article.addAsset(Asset.buildFromJson(assets.getJSONObject(i)));
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -143,6 +152,22 @@ public class Article
     public void setBody(String body)
     {
         mBody = body;
+    }
+
+
+    public ArrayList<Asset> getAssets()
+    {
+        return mAssets;
+    }
+
+    public void setAssets(ArrayList<Asset> assets)
+    {
+        mAssets = assets;
+    }
+
+    public void addAsset(Asset asset)
+    {
+        mAssets.add(asset);
     }
 
 }

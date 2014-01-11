@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -27,6 +28,7 @@ public class ArticleFragment extends Fragment
     private TextView mBody;
     private TextView mTimestamp;
     private TextView mByline;
+    private ImageView mAsset;
 
 
     public static ArticleFragment newInstance(String articleId)
@@ -69,6 +71,7 @@ public class ArticleFragment extends Fragment
         mBody       = (TextView)v.findViewById(R.id.article_body_textView);
         mTimestamp  = (TextView)v.findViewById(R.id.article_timestamp_textView);
         mByline     = (TextView)v.findViewById(R.id.article_byline_TextView);
+        mAsset      = (ImageView)v.findViewById(R.id.article_asset_ImageView);
 
         mTitle.setText(mArticle.getTitle());
         mBody.setText(Html.fromHtml(mArticle.getBody()));
