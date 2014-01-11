@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 
 
-public class ArticlePagerActivity extends FragmentActivity
+public class ArticleActivity extends FragmentActivity
 {
 
     private ViewPager mViewPager;

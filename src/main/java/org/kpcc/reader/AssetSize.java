@@ -1,6 +1,8 @@
 package org.kpcc.reader;
 
+import android.graphics.drawable.Drawable;
 import android.net.ParseException;
+import android.widget.ImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +13,8 @@ public class AssetSize
     private String mUrl;
     private int mWidth;
     private int mHeight;
+    private Drawable mDrawable;
+
 
     public static AssetSize buildFromJson(JSONObject jsonAssetSize)
     {
@@ -62,6 +66,21 @@ public class AssetSize
     public void setHeight(int height)
     {
         mHeight = height;
+    }
+
+    public void setDrawable(Drawable drawable)
+    {
+        mDrawable = drawable;
+    }
+
+    public void insertDrawable(ImageView imageView)
+    {
+        if (mDrawable != null)
+        {
+            imageView.setImageDrawable(mDrawable);
+        } else {
+            new MediaDownload(this, imageView).execute(this);
+        }
     }
 
 }

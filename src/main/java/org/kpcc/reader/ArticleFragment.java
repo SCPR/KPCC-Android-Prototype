@@ -77,11 +77,17 @@ public class ArticleFragment extends Fragment
         mBody.setText(Html.fromHtml(mArticle.getBody()));
         mByline.setText(mArticle.getByline());
 
-        java.text.DateFormat dateFormat = DateFormat.getLongDateFormat(getActivity().getApplicationContext());
-        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(getActivity().getApplicationContext());
+        java.text.DateFormat dateFormat =
+            DateFormat.getLongDateFormat(getActivity().getApplicationContext());
+        java.text.DateFormat timeFormat =
+            DateFormat.getTimeFormat(getActivity().getApplicationContext());
+
         String date = dateFormat.format(mArticle.getTimestamp());
         String time = timeFormat.format(mArticle.getTimestamp());
         mTimestamp.setText(date + ", " + time);
+
+        AssetSize assetSize = mArticle.getAssets().get(0).getSizeFull();
+        new MediaDownload(assetSize, mAsset).execute(assetSize);
 
         return v;
     }

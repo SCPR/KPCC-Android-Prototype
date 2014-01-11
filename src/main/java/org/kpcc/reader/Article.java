@@ -19,6 +19,7 @@ public class Article
     private String mTitle;
     private String mShortTitle;
     private String mPublicUrl;
+    private Category mCategory;
     private String mByline;
     private Date mTimestamp;
     private String mTeaser;
@@ -43,6 +44,9 @@ public class Article
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
             Date timestamp = sdf.parse(jsonArticle.getString("published_at"));
             article.setTimestamp(timestamp);
+
+            JSONObject category = jsonArticle.getJSONObject("category");
+            article.setCategory(Category.buildFromJson(category));
 
             JSONArray assets = jsonArticle.getJSONArray("assets");
             for (int i=0; i < assets.length(); i++)
@@ -108,6 +112,17 @@ public class Article
     public void setPublicUrl(String publicUrl)
     {
         mPublicUrl = publicUrl;
+    }
+
+
+    public Category getCategory()
+    {
+        return mCategory;
+    }
+
+    public void setCategory(Category category)
+    {
+        mCategory = category;
     }
 
 
