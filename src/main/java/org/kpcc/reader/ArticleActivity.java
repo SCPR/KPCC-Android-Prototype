@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 
 public class ArticleActivity extends FragmentActivity
 {
+
+    private final static String TAG = "org.kpcc.reader.DEBUG.ArticleActivity";
 
     private ViewPager mViewPager;
     private ArrayList<Article> mArticles;
@@ -20,6 +23,7 @@ public class ArticleActivity extends FragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d(TAG, "got OnCreate for ArticleActivity");
         super.onCreate(savedInstanceState);
 
         mArticles = ArticleCollection.get(this).getArticles();

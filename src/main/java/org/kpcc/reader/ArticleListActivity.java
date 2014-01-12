@@ -2,7 +2,6 @@ package org.kpcc.reader;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,7 +65,9 @@ public class ArticleListActivity extends Activity
                 Intent i = new Intent(ArticleListActivity.this, ArticleActivity.class);
                 i.putExtra(ArticleFragment.EXTRA_ARTICLE_ID, a.getId());
 
+                Log.d(TAG, "starting ArticleActivity...");
                 startActivity(i);
+                Log.d(TAG, "Started ArticleActivity");
             }
         });
 
@@ -162,8 +163,6 @@ public class ArticleListActivity extends Activity
 
     private class ArticleAdapter extends ArrayAdapter<Article>
     {
-
-        private Drawable[] imageCache;
 
         public ArticleAdapter(ArticleCollection articleCollection)
         {

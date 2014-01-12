@@ -8,6 +8,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +18,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 public class ArticleFragment extends Fragment
 {
 
     public static final String EXTRA_ARTICLE_ID = "org.kpcc.reader.article_id";
-    private static final String TAG = "ArticleFragment";
+    private static final String TAG = "org.kpcc.reader.DEBUG.ArticleFragment";
 
     private Article mArticle;
     private TextView mTitle;
@@ -46,6 +49,8 @@ public class ArticleFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d(TAG, "got OnCreate for ArticleFragment");
+
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -58,6 +63,8 @@ public class ArticleFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "got OnCreateView for ArticleFragment");
+
         View v = inflater.inflate(R.layout.fragment_article, parent, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -91,8 +98,8 @@ public class ArticleFragment extends Fragment
 
         if (mArticle.hasAssets())
         {
-            AssetSize assetSize = mArticle.getAssets().get(0).getSizeFull();
-           new MediaDownload(assetSize, mAsset).execute(assetSize);
+            String url = mArticle.getAssets().get(0).getSizeFull().getUrl();
+            ImageLoader.getInstance().displayImage(url, mAsset);
         }
 
         return v;
