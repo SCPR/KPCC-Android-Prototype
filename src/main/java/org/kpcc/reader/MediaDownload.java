@@ -14,10 +14,24 @@ public class MediaDownload extends AsyncTask<AssetSize, Void, Drawable>
     private ImageView mView;
     private AssetSize mAssetSize;
 
+
     public MediaDownload(AssetSize assetSize, ImageView view)
     {
         mAssetSize = assetSize;
         mView = view;
+    }
+
+
+    protected void onPreExecute()
+    {
+        // Make sure the system only attempts to download this image once
+        // at a time.
+        if (mAssetSize.getIsDownloading())
+        {
+            cancel(true);
+        } else {
+            mAssetSize.setIsDownloading(true);
+        }
     }
 
 
@@ -41,8 +55,17 @@ public class MediaDownload extends AsyncTask<AssetSize, Void, Drawable>
 
     protected void onPostExecute(Drawable image)
     {
-        mAssetSize.setDrawable(image);
-        mAssetSize.insertDrawable(mView);
+        mAssetSize.setIsDownloading(false);
+        mView.setImageDrawable(image);
+        AssetCache cache = AssetCache.getInstance(mView.getContext());
+
+        synchronized (cache)
+        {
+            // We'll use the asset's URL as the key, since we know that will be unique.
+            // That also has the benefit that if the asset changes on the server,
+            // the cache will be invalidated.
+            cache.set(mAssetSize.getUrl(), image);
+        }
     }
 
 }

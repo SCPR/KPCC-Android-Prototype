@@ -63,4 +63,5 @@ public class ArticleCollection
     {
         return mArticles.size();
     }
+
 }

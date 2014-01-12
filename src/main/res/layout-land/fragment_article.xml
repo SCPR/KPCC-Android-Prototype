@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/article_asset_ImageView"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="250dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
@@ -36,13 +36,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:background="@android:color/background_dark">
 
             <TextView
                 android:id="@+id/article_byline_TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"
@@ -50,8 +51,10 @@
 
             <TextView
                 android:id="@+id/article_timestamp_textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:gravity="right"
                 android:textStyle="italic"
                 android:textSize="15sp"
                 android:textColor="@android:color/white"
@@ -66,7 +69,6 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:autoLink="all"
-            android:linksClickable="true"
             android:fontFamily="serif"
             android:textSize="18sp"
             android:text="@string/placeholder_article_body" />

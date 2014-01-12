@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">KPCC Reader</string>
     <string name="articles_title">Articles</string>
-    <string name="empty_list_articles">No articles are available.</string>
+    <string name="articles_loading">Loading Articles&#8230;</string>
+
+    <string name="placeholder_article_title">Neiman Marcus confirms thieves stole customers\' information, made unauthorized charges</string>
+    <string name="placeholder_article_short_title">Neiman Marcus confirms thieves stole customers\' information</string>
+    <string name="placeholder_article_byline">Erika Aguilar | KPCC | Take Two</string>
+    <string name="placeholder_article_timestamp">January 11, 2014, 10:59 PM</string>
+    <string name="placeholder_article_body">ARTICLE BODY</string>
+
+    <string name="placeholder_asset_description">PHOTO DESCRIPTION</string>
 </resources>

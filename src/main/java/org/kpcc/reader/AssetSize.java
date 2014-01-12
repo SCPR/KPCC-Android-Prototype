@@ -2,6 +2,7 @@ package org.kpcc.reader;
 
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.json.JSONException;
@@ -10,11 +11,12 @@ import org.json.JSONObject;
 public class AssetSize
 {
 
+    private final static String TAG = "org.kpcc.reader.DEBUG.AssetSize";
+
     private String mUrl;
     private int mWidth;
     private int mHeight;
-    private Drawable mDrawable;
-
+    private boolean mIsDownloading = false;
 
     public static AssetSize buildFromJson(JSONObject jsonAssetSize)
     {
@@ -68,19 +70,41 @@ public class AssetSize
         mHeight = height;
     }
 
-    public void setDrawable(Drawable drawable)
+
+    public void setIsDownloading(boolean isDownloading)
     {
-        mDrawable = drawable;
+        mIsDownloading = isDownloading;
     }
+
+    public boolean getIsDownloading()
+    {
+        return mIsDownloading;
+    }
+
 
     public void insertDrawable(ImageView imageView)
     {
-        if (mDrawable != null)
+        if (mIsDownloading) return;
+
+        imageView.setImageDrawable(null);
+
+        AssetCache cache = AssetCache.getInstance(imageView.getContext());
+        Drawable image;
+
+        synchronized (cache)
         {
-            imageView.setImageDrawable(mDrawable);
-        } else {
-            new MediaDownload(this, imageView).execute(this);
+            image = cache.get(getUrl());
         }
+
+        if (image == null)
+        {
+            Log.d(TAG, "[CACHE MISS] " + getUrl());
+            new MediaDownload(this, imageView).execute(this);
+        } else {
+            Log.d(TAG, "[CACHE HIT] " + getUrl());
+            imageView.setImageDrawable(image);
+        }
+
     }
 
 }

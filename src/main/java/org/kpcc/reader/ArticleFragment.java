@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.format.DateFormat;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -74,8 +75,10 @@ public class ArticleFragment extends Fragment
         mAsset      = (ImageView)v.findViewById(R.id.article_asset_ImageView);
 
         mTitle.setText(mArticle.getTitle());
-        mBody.setText(Html.fromHtml(mArticle.getBody()));
         mByline.setText(mArticle.getByline());
+
+        mBody.setText(Html.fromHtml(mArticle.getBody()));
+        mBody.setMovementMethod(LinkMovementMethod.getInstance());
 
         java.text.DateFormat dateFormat =
             DateFormat.getLongDateFormat(getActivity().getApplicationContext());
@@ -86,8 +89,11 @@ public class ArticleFragment extends Fragment
         String time = timeFormat.format(mArticle.getTimestamp());
         mTimestamp.setText(date + ", " + time);
 
-        AssetSize assetSize = mArticle.getAssets().get(0).getSizeFull();
-        new MediaDownload(assetSize, mAsset).execute(assetSize);
+        if (mArticle.hasAssets())
+        {
+            AssetSize assetSize = mArticle.getAssets().get(0).getSizeFull();
+           new MediaDownload(assetSize, mAsset).execute(assetSize);
+        }
 
         return v;
     }

@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class Article
 {
 
@@ -27,6 +26,8 @@ public class Article
     private ArrayList<Asset> mAssets = new ArrayList<Asset>();
 
 
+    // Build an Article from a JSON response.
+    // https://github.com/SCPR/api-docs/blob/master/KPCC/v2/endpoints/articles.md
     public static Article buildFromJson(JSONObject jsonArticle)
     {
         Article article = new Article();
@@ -45,8 +46,11 @@ public class Article
             Date timestamp = sdf.parse(jsonArticle.getString("published_at"));
             article.setTimestamp(timestamp);
 
-            JSONObject category = jsonArticle.getJSONObject("category");
-            article.setCategory(Category.buildFromJson(category));
+            if (jsonArticle.has("category"))
+            {
+                JSONObject category = jsonArticle.getJSONObject("category");
+                article.setCategory(Category.buildFromJson(category));
+            }
 
             JSONArray assets = jsonArticle.getJSONArray("assets");
             for (int i=0; i < assets.length(); i++)
@@ -183,6 +187,11 @@ public class Article
     public void addAsset(Asset asset)
     {
         mAssets.add(asset);
+    }
+
+    public boolean hasAssets()
+    {
+        return mAssets.size() > 0;
     }
 
 }
