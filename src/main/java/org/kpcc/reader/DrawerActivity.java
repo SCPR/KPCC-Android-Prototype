@@ -6,6 +6,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,8 @@ public abstract class DrawerActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Log.d(TAG, "Got onCreate");
+
         super.onCreate(savedInstanceState);
         setContentView(getMainLayoutId());
 
@@ -98,6 +101,8 @@ public abstract class DrawerActivity extends FragmentActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+
+        Log.d(TAG, "Exiting onCreate...");
     }
 
 

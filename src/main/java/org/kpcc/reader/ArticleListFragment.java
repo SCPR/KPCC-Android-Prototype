@@ -3,6 +3,7 @@ package org.kpcc.reader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,7 @@ public class ArticleListFragment extends Fragment
                 Intent i = new Intent(getActivity(), SingleArticleActivity.class);
                 i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
 
+                Log.d(TAG, "Starting SingleArticleActivity...");
                 startActivity(i);
             }
         });

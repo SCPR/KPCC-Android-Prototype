@@ -1,11 +1,11 @@
 package org.kpcc.reader;
 
 import android.annotation.TargetApi;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
-import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,6 +28,7 @@ public class SingleArticleFragment extends Fragment
     private static final String TAG = "org.kpcc.reader.DEBUG.SingleArticleFragment";
 
     private Article mArticle;
+    private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
     private TextView mTimestamp;
@@ -70,6 +72,8 @@ public class SingleArticleFragment extends Fragment
             }
         }
 
+        mProgress = (ProgressBar)v.findViewById(R.id.article_body_progress);
+
         mTitle      = (TextView)v.findViewById(R.id.article_title_textView);
         mBody       = (TextView)v.findViewById(R.id.article_body_textView);
         mTimestamp  = (TextView)v.findViewById(R.id.article_timestamp_textView);
@@ -79,8 +83,23 @@ public class SingleArticleFragment extends Fragment
         mTitle.setText(mArticle.getTitle());
         mByline.setText(mArticle.getByline());
 
-        mBody.setText(Html.fromHtml(mArticle.getBody()));
+        if (mArticle.getParsedBody() == null)
+        {
+            new HtmlParser(mBody, mArticle, mProgress).execute(mArticle.getBody());
+        } else {
+            mBody.setText(mArticle.getParsedBody());
+        }
+
         mBody.setMovementMethod(LinkMovementMethod.getInstance());
+
+        Typeface serifFont =
+            Typeface.createFromAsset(getActivity().getAssets(), "fonts/DroidSerif.ttf");
+
+        Typeface sansLightFont =
+            Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+
+        mTitle.setTypeface(sansLightFont);
+        mBody.setTypeface(serifFont);
 
         java.text.DateFormat dateFormat =
             DateFormat.getLongDateFormat(getActivity().getApplicationContext());

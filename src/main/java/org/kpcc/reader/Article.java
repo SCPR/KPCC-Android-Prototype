@@ -1,5 +1,7 @@
 package org.kpcc.reader;
 
+import android.text.Spanned;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ public class Article
     private Date mTimestamp;
     private String mTeaser;
     private String mBody;
+    private Spanned mParsedBody;
     private ArrayList<Asset> mAssets = new ArrayList<Asset>();
 
 
@@ -171,6 +174,17 @@ public class Article
     public void setBody(String body)
     {
         mBody = body;
+    }
+
+
+    public Spanned getParsedBody()
+    {
+        return mParsedBody;
+    }
+
+    public void setParsedBody(Spanned parsedBody)
+    {
+        mParsedBody = parsedBody;
     }
 
 

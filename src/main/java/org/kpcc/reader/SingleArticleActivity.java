@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,8 @@ public class SingleArticleActivity extends DrawerActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d(TAG, "Got onCreate()");
+
         super.onCreate(savedInstanceState);
 
         mArticles = ArticleCollection.get(this).getArticles();
@@ -72,6 +75,9 @@ public class SingleArticleActivity extends DrawerActivity
                 break;
             }
         }
+
+        Log.d(TAG, "Exiting onCreate");
+
     }
 
 

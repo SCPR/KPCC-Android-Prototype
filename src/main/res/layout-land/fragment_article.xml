@@ -62,16 +62,7 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/article_body_textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:autoLink="all"
-            android:fontFamily="serif"
-            android:textSize="18sp"
-            android:text="@string/placeholder_article_body" />
+        <include layout="@layout/article_body" />
 
     </LinearLayout>
 
