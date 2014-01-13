@@ -2,6 +2,7 @@ package org.kpcc.reader;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 
-public class SingleArticleActivity extends DrawerActivity
+public class SingleArticleActivity extends FragmentActivity
 {
 
     private final static String TAG = "org.kpcc.reader.DEBUG.SingleArticleActivity";
@@ -22,12 +23,17 @@ public class SingleArticleActivity extends DrawerActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "Got onCreate()");
+        Log.d(TAG, "Got onCreate");
 
         super.onCreate(savedInstanceState);
 
         mArticles = ArticleCollection.get(this).getArticles();
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        setContentView(R.layout.activity_single_article);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mViewPager = (ViewPager) findViewById(R.id.single_article_view_pager);
 
         FragmentManager fm = getSupportFragmentManager();
 
@@ -75,16 +81,6 @@ public class SingleArticleActivity extends DrawerActivity
                 break;
             }
         }
-
-        Log.d(TAG, "Exiting onCreate");
-
-    }
-
-
-    @Override
-    protected int getMainLayoutId()
-    {
-        return R.layout.drawer_with_view_pager;
     }
 
 }

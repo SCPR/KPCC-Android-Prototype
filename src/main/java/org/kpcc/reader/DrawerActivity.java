@@ -101,8 +101,6 @@ public abstract class DrawerActivity extends FragmentActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
-        Log.d(TAG, "Exiting onCreate...");
     }
 
 
