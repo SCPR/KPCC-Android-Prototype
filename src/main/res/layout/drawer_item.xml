@@ -23,6 +23,5 @@
         android:layout_height="50dp"
         android:layout_toRightOf="@id/nav_menu_item_icon"
         android:gravity="center_vertical"
-        android:textColor="@android:color/white"
         android:text="@string/placeholder_nav_item" />
 </RelativeLayout>
