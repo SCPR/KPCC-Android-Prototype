@@ -2,19 +2,17 @@ package org.kpcc.reader;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import java.util.ArrayList;
 
 
-public class ArticleActivity extends FragmentActivity
+public class SingleArticleActivity extends DrawerActivity
 {
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.ArticleActivity";
+    private final static String TAG = "org.kpcc.reader.DEBUG.SingleArticleActivity";
 
     private ViewPager mViewPager;
     private ArrayList<Article> mArticles;
@@ -23,14 +21,10 @@ public class ArticleActivity extends FragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "got OnCreate for ArticleActivity");
         super.onCreate(savedInstanceState);
 
         mArticles = ArticleCollection.get(this).getArticles();
-
-        mViewPager = new ViewPager(this);
-        mViewPager.setId(R.id.viewPager);
-        setContentView(mViewPager);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         FragmentManager fm = getSupportFragmentManager();
 
@@ -40,7 +34,7 @@ public class ArticleActivity extends FragmentActivity
             public Fragment getItem(int pos)
             {
                 Article article = mArticles.get(pos);
-                return ArticleFragment.newInstance(article.getId());
+                return SingleArticleFragment.newInstance(article.getId());
             }
 
             @Override
@@ -68,7 +62,8 @@ public class ArticleActivity extends FragmentActivity
             }
         });
 
-        String articleId = getIntent().getStringExtra(ArticleFragment.EXTRA_ARTICLE_ID);
+        String articleId = getIntent().getStringExtra(SingleArticleFragment.EXTRA_ARTICLE_ID);
+
         for (int i=0; i < mArticles.size(); i++)
         {
             if (mArticles.get(i).getId().equals(articleId))
@@ -77,6 +72,13 @@ public class ArticleActivity extends FragmentActivity
                 break;
             }
         }
+    }
+
+
+    @Override
+    protected int getMainLayoutId()
+    {
+        return R.layout.drawer_with_view_pager;
     }
 
 }

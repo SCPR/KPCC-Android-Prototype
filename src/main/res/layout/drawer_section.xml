@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_dark">
+
+    <TextView
+        android:id="@+id/nav_menu_section_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        android:background="@android:color/background_dark"
+        android:text="@string/placeholder_nav_section"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray" />
+
+</RelativeLayout>

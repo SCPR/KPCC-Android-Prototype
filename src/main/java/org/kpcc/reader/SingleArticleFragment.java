@@ -8,7 +8,6 @@ import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +20,11 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 
-public class ArticleFragment extends Fragment
+public class SingleArticleFragment extends Fragment
 {
 
     public static final String EXTRA_ARTICLE_ID = "org.kpcc.reader.article_id";
-    private static final String TAG = "org.kpcc.reader.DEBUG.ArticleFragment";
+    private static final String TAG = "org.kpcc.reader.DEBUG.SingleArticleFragment";
 
     private Article mArticle;
     private TextView mTitle;
@@ -35,12 +34,12 @@ public class ArticleFragment extends Fragment
     private ImageView mAsset;
 
 
-    public static ArticleFragment newInstance(String articleId)
+    public static SingleArticleFragment newInstance(String articleId)
     {
         Bundle args = new Bundle();
         args.putString(EXTRA_ARTICLE_ID, articleId);
 
-        ArticleFragment fragment = new ArticleFragment();
+        SingleArticleFragment fragment = new SingleArticleFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,8 +48,6 @@ public class ArticleFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "got OnCreate for ArticleFragment");
-
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -63,8 +60,6 @@ public class ArticleFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "got OnCreateView for ArticleFragment");
-
         View v = inflater.inflate(R.layout.fragment_article, parent, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
