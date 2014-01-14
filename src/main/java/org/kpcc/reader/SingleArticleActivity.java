@@ -23,8 +23,6 @@ public class SingleArticleActivity extends FragmentActivity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "Got onCreate");
-
         super.onCreate(savedInstanceState);
 
         mArticles = ArticleCollection.get(this).getArticles();

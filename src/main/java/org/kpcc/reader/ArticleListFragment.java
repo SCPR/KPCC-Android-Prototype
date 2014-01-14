@@ -3,7 +3,6 @@ package org.kpcc.reader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,13 +35,16 @@ public class ArticleListFragment extends Fragment
     private final static int LOAD_THRESHOLD = 0;
     private final static String EXTRA_REQUEST_PARAMS = "org.kpcc.reader.request_params";
 
+    private final static String QUERY_DEFAULT_TYPES = "news,blogs,segments";
+    private final static String QUERY_DEFAULT_LIMIT = "20";
+    private final static String QUERY_DEFAULT_PAGE = "1";
+
     private ArticleCollection mArticles;
     private GridView mGridView;
-    private ArticleAdapter mAdapter;
-    private int mLastPage = 0;
     private boolean mLoadingArticles = false;
     private RelativeLayout mLoadingIndicator;
-    private RequestParams mParams = new RequestParams();
+    private int mLastPage = 0;
+    private HashMap<String, String> mDefaultParams = new HashMap<String, String>();
 
 
     public static ArticleListFragment newInstance(HashMap<String, String> params)
@@ -66,21 +69,22 @@ public class ArticleListFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         // Setup default params
-        mParams.put("types", "news,blogs,segments");
-        mParams.put("limit", "20");
+        mDefaultParams.put("types", QUERY_DEFAULT_TYPES);
+        mDefaultParams.put("limit", QUERY_DEFAULT_LIMIT);
+        mDefaultParams.put("page", QUERY_DEFAULT_PAGE);
 
         // Fill in params from passed-in arguments
         HashMap<String, String> params =
             (HashMap<String, String>) getArguments().getSerializable(EXTRA_REQUEST_PARAMS);
 
-        if (params != null)
-        {
-            for (Map.Entry<String, String> entry : params.entrySet())
-            {
-                mParams.put(entry.getKey(), entry.getValue());
-            }
-        }
+        mergeParams(mDefaultParams, params);
+
+        // Get whatever the current Article set is.
+        // It may be overridden when the HTTP query is finished.
+        mArticles = ArticleCollection.get(getActivity());
+        fetchArticles(params);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
@@ -90,13 +94,14 @@ public class ArticleListFragment extends Fragment
         mGridView = (GridView)v.findViewById(R.id.articles_GridView);
         mLoadingIndicator = (RelativeLayout)v.findViewById(R.id.article_list_loading_footer);
 
-        mArticles = ArticleCollection.get(getActivity());
-        setupAdapter();
-
-        if (mArticles.size() == 0)
+        if (mLoadingArticles)
         {
-            fetchNextPage();
+            mLoadingIndicator.setVisibility(View.VISIBLE);
+        } else {
+            mLoadingIndicator.setVisibility(View.GONE);
         }
+
+        setupAdapter();
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -107,7 +112,6 @@ public class ArticleListFragment extends Fragment
                 Intent i = new Intent(getActivity(), SingleArticleActivity.class);
                 i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
 
-                Log.d(TAG, "Starting SingleArticleActivity...");
                 startActivity(i);
             }
         });
@@ -121,7 +125,9 @@ public class ArticleListFragment extends Fragment
                 {
                     if (view.getLastVisiblePosition() >= view.getCount() - 1 - LOAD_THRESHOLD)
                     {
-                        fetchNextPage();
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put("page", String.valueOf(mLastPage + 1));
+                        fetchArticles(params);
                     }
                 }
             }
@@ -136,39 +142,39 @@ public class ArticleListFragment extends Fragment
         return v;
     }
 
-    private void fetchNextPage()
+
+    private void fetchArticles(HashMap<String, String> params)
     {
-        if (mLoadingArticles) return;
-        mLoadingIndicator.setVisibility(View.VISIBLE);
-
-        mLastPage += 1;
-
-        mParams.put("page", String.valueOf(mLastPage));
-
         // Add a loading mutex to prevent loading too much.
         // The lock gets released in the onSuccess callback.
-        mLoadingArticles = true;
+        if (mLoadingArticles) return;
+        setIsLoading(true);
 
-        ArticleClient.getCollection(mParams, new JsonHttpResponseHandler()
+        RequestParams requestParams = new RequestParams();
+        mergeParams(requestParams, mDefaultParams, params);
+
+        ArticleClient.getCollection(requestParams, new JsonHttpResponseHandler()
         {
             @Override
             public void onSuccess(JSONArray articles)
             {
+                ArrayList<Article> collection = new ArrayList<Article>();
+
                 try
                 {
                     for (int i = 0; i < articles.length(); i++)
                     {
-                        JSONObject a = articles.getJSONObject(i);
-                        Article article = Article.buildFromJson(a);
-                        ArticleListFragment.this.addArticle(article);
+                        Article article = Article.buildFromJson(articles.getJSONObject(i));
+                        collection.add(article);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                mLoadingIndicator.setVisibility(View.GONE);
-                mAdapter.notifyDataSetChanged();
-                mLoadingArticles = false;
+                // Update the ArticleCollection articles.
+                mArticles.setArticles(collection);
+                setupAdapter();
+                setIsLoading(false);
             }
 
             @Override
@@ -179,24 +185,75 @@ public class ArticleListFragment extends Fragment
                 mLoadingArticles = false;
             }
         });
+
+        if (params != null)
+        {
+            // This is not the best place to put this, because it
+            // sets the last page before the page has actually
+            // loaded, which means that a page could get skipped
+            // if there is a failure.
+            if (params.containsKey("page"))
+            {
+                mLastPage = Integer.parseInt(params.get("page"));
+            }
+        }
     }
 
 
-    public void addArticle(Article article)
+    // Yes, these are two nearly identical methods. RequestParams and HashMap need to share
+    // a roof under a single class so that they can be interchangeable in some regard,
+    // like in these two methods.
+    // Either that or RequestParams needs to be cast-able to a HashMap.
+    private void mergeParams(HashMap<String, String> original, HashMap<String, String>... updaters)
     {
-        if (mArticles.getArticle(article.getId()) == null)
+        for (HashMap<String, String> updater : updaters)
         {
-            mAdapter.add(article);
+            if (updater == null) continue;
+
+            for (Map.Entry<String, String> entry : updater.entrySet())
+            {
+                original.put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+
+    private void mergeParams(RequestParams original, HashMap<String, String>... updaters)
+    {
+        for (HashMap<String, String> updater : updaters)
+        {
+            if (updater == null) continue;
+
+            for (Map.Entry<String, String> entry : updater.entrySet())
+            {
+                original.put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+
+    private void setIsLoading(boolean isLoading)
+    {
+        mLoadingArticles = isLoading;
+
+        if (mLoadingIndicator != null)
+        {
+            mLoadingIndicator.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         }
     }
 
 
     private void setupAdapter()
     {
-        mAdapter = new ArticleAdapter(mArticles);
-        mGridView.setAdapter(mAdapter);
-    }
+        if (getActivity() == null || mGridView == null) return;
 
+        if (mArticles != null)
+        {
+            mGridView.setAdapter(new ArticleAdapter(mArticles));
+        } else {
+            mGridView.setAdapter(null);
+        }
+    }
 
 
     private class ArticleAdapter extends ArrayAdapter<Article>

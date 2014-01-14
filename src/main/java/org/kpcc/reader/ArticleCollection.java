@@ -39,6 +39,12 @@ public class ArticleCollection
     }
 
 
+    public void setArticles(ArrayList<Article> articles)
+    {
+        mArticles = articles;
+    }
+
+
     public Article getArticle(String id)
     {
         for (Article article : mArticles)
