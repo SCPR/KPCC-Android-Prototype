@@ -45,6 +45,7 @@ public class ArticleListFragment extends Fragment
     private RelativeLayout mLoadingIndicator;
     private int mLastPage = 0;
     private HashMap<String, String> mDefaultParams = new HashMap<String, String>();
+    private ArticleAdapter mAdapter;
 
 
     public static ArticleListFragment newInstance(HashMap<String, String> params)
@@ -82,7 +83,7 @@ public class ArticleListFragment extends Fragment
         // Get whatever the current Article set is.
         // It may be overridden when the HTTP query is finished.
         mArticles = ArticleCollection.get(getActivity());
-        fetchArticles(params);
+        fetchArticles(params, true);
     }
 
 
@@ -101,7 +102,7 @@ public class ArticleListFragment extends Fragment
             mLoadingIndicator.setVisibility(View.GONE);
         }
 
-        setupAdapter();
+        resetAdapter();
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -127,7 +128,7 @@ public class ArticleListFragment extends Fragment
                     {
                         HashMap<String, String> params = new HashMap<String, String>();
                         params.put("page", String.valueOf(mLastPage + 1));
-                        fetchArticles(params);
+                        fetchArticles(params, false);
                     }
                 }
             }
@@ -143,7 +144,7 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void fetchArticles(HashMap<String, String> params)
+    private void fetchArticles(HashMap<String, String> params, boolean replace)
     {
         // Add a loading mutex to prevent loading too much.
         // The lock gets released in the onSuccess callback.
@@ -153,38 +154,7 @@ public class ArticleListFragment extends Fragment
         RequestParams requestParams = new RequestParams();
         mergeParams(requestParams, mDefaultParams, params);
 
-        ArticleClient.getCollection(requestParams, new JsonHttpResponseHandler()
-        {
-            @Override
-            public void onSuccess(JSONArray articles)
-            {
-                ArrayList<Article> collection = new ArrayList<Article>();
-
-                try
-                {
-                    for (int i = 0; i < articles.length(); i++)
-                    {
-                        Article article = Article.buildFromJson(articles.getJSONObject(i));
-                        collection.add(article);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                // Update the ArticleCollection articles.
-                mArticles.setArticles(collection);
-                setupAdapter();
-                setIsLoading(false);
-            }
-
-            @Override
-            public void onFailure(
-            int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
-            {
-                // TODO: Handle errors mo' betta
-                mLoadingArticles = false;
-            }
-        });
+        ArticleClient.getCollection(requestParams, new ArticleJsonResponseHandler(replace));
 
         if (params != null)
         {
@@ -243,15 +213,75 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void setupAdapter()
+    private void resetAdapter()
     {
         if (getActivity() == null || mGridView == null) return;
 
         if (mArticles != null)
         {
-            mGridView.setAdapter(new ArticleAdapter(mArticles));
+            mAdapter = new ArticleAdapter(mArticles);
+            mGridView.setAdapter(mAdapter);
         } else {
             mGridView.setAdapter(null);
+        }
+    }
+
+
+    private class ArticleJsonResponseHandler extends JsonHttpResponseHandler
+    {
+        private boolean mShouldReplaceCollection;
+
+
+        public ArticleJsonResponseHandler(boolean shouldReplaceCollection)
+        {
+            mShouldReplaceCollection = shouldReplaceCollection;
+        }
+
+
+        @Override
+        public void onSuccess(JSONArray articles)
+        {
+            ArrayList<Article> collection = new ArrayList<Article>();
+
+            try
+            {
+                for (int i = 0; i < articles.length(); i++)
+                {
+                    Article article = Article.buildFromJson(articles.getJSONObject(i));
+                    collection.add(article);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            // Update the ArticleCollection articles.
+
+            if (mShouldReplaceCollection)
+            {
+                // We replace the app's entire collection of Articles,
+                // and reset the adapter for this Activity.
+                mArticles.setArticles(collection);
+                resetAdapter();
+
+            } else {
+                // Just add the extra articles to this activity's adapter.
+                // The adapter will handle adding them to the collection.
+                // NOTE: We would use ArrayAdapter#addAll, but it requires API level 11+.
+                for (Article article : collection)
+                {
+                    mAdapter.add(article);
+                }
+            }
+
+            setIsLoading(false);
+        }
+
+        @Override
+        public void onFailure(
+            int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+        {
+            // TODO: Handle errors mo' betta
+            mLoadingArticles = false;
         }
     }
 

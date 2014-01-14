@@ -64,6 +64,11 @@ public class ArticleCollection
         mArticles.add(article);
     }
 
+    public void addAll(ArrayList<Article> articles)
+    {
+        mArticles.addAll(articles);
+    }
+
 
     public int size()
     {
