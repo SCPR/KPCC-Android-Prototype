@@ -43,7 +43,7 @@ public class ArticleListFragment extends Fragment
     private GridView mGridView;
     private boolean mLoadingArticles = false;
     private RelativeLayout mLoadingIndicator;
-    private int mLastPage = 0;
+    private int mLastPage = 0; // This gets updated on a successful page load.
     private HashMap<String, String> mDefaultParams = new HashMap<String, String>();
     private ArticleAdapter mAdapter;
 
@@ -83,7 +83,7 @@ public class ArticleListFragment extends Fragment
         // Get whatever the current Article set is.
         // It may be overridden when the HTTP query is finished.
         mArticles = ArticleCollection.get(getActivity());
-        fetchArticles(params, true);
+        fetchArticles(null, true);
     }
 
 
@@ -144,7 +144,7 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void fetchArticles(HashMap<String, String> params, boolean replace)
+    private void fetchArticles(HashMap<String, String> overrideParams, boolean replace)
     {
         // Add a loading mutex to prevent loading too much.
         // The lock gets released in the onSuccess callback.
@@ -152,21 +152,9 @@ public class ArticleListFragment extends Fragment
         setIsLoading(true);
 
         RequestParams requestParams = new RequestParams();
-        mergeParams(requestParams, mDefaultParams, params);
+        mergeParams(requestParams, mDefaultParams, overrideParams);
 
         ArticleClient.getCollection(requestParams, new ArticleJsonResponseHandler(replace));
-
-        if (params != null)
-        {
-            // This is not the best place to put this, because it
-            // sets the last page before the page has actually
-            // loaded, which means that a page could get skipped
-            // if there is a failure.
-            if (params.containsKey("page"))
-            {
-                mLastPage = Integer.parseInt(params.get("page"));
-            }
-        }
     }
 
 
@@ -255,7 +243,6 @@ public class ArticleListFragment extends Fragment
             }
 
             // Update the ArticleCollection articles.
-
             if (mShouldReplaceCollection)
             {
                 // We replace the app's entire collection of Articles,
@@ -263,14 +250,21 @@ public class ArticleListFragment extends Fragment
                 mArticles.setArticles(collection);
                 resetAdapter();
 
+                // Set the page back to 1.
+                // TODO: This would be incorrect if someone requested a replace fetch with a different page than 1.
+                mLastPage = 1;
+
             } else {
                 // Just add the extra articles to this activity's adapter.
                 // The adapter will handle adding them to the collection.
                 // NOTE: We would use ArrayAdapter#addAll, but it requires API level 11+.
-                for (Article article : collection)
-                {
-                    mAdapter.add(article);
-                }
+                for (Article article : collection) mAdapter.add(article);
+
+                // We are *assuming* that if we get here (i.e. we're appending articles
+                // do the full collection), this was a pagination request, so we'll
+                // increase the page.
+                // TODO: Find a better place to increase the page number.
+                mLastPage += 1;
             }
 
             setIsLoading(false);
