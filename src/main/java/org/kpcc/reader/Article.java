@@ -27,6 +27,7 @@ public class Article
     private String mBody;
     private Spanned mParsedBody;
     private ArrayList<Asset> mAssets = new ArrayList<Asset>();
+    private ArrayList<Audio> mAudio = new ArrayList<Audio>();
 
 
     // Build an Article from a JSON response.
@@ -59,6 +60,12 @@ public class Article
             for (int i=0; i < assets.length(); i++)
             {
                 article.addAsset(Asset.buildFromJson(assets.getJSONObject(i)));
+            }
+
+            JSONArray audio = jsonArticle.getJSONArray("audio");
+            for (int i=0; i < audio.length(); i++)
+            {
+                article.addAudio(Audio.buildFromJson(audio.getJSONObject(i)));
             }
 
         } catch (JSONException e) {
@@ -206,6 +213,27 @@ public class Article
     public boolean hasAssets()
     {
         return mAssets.size() > 0;
+    }
+
+
+    public ArrayList<Audio> getAudio()
+    {
+        return mAudio;
+    }
+
+    public void setAudio(ArrayList<Audio> audio)
+    {
+        mAudio = audio;
+    }
+
+    public void addAudio(Audio audio)
+    {
+        mAudio.add(audio);
+    }
+
+    public boolean hasAudio()
+    {
+        return mAudio.size() > 0;
     }
 
 }

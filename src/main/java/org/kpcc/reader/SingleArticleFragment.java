@@ -2,8 +2,10 @@ package org.kpcc.reader;
 
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
@@ -15,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.IOException;
 
 
 public class SingleArticleFragment extends Fragment
@@ -36,6 +41,8 @@ public class SingleArticleFragment extends Fragment
     private TextView mTimestamp;
     private TextView mByline;
     private ImageView mAsset;
+    private MediaPlayer mAudioPlayer;
+    private MediaController mAudioController;
 
 
     public static SingleArticleFragment newInstance(String articleId)
@@ -76,11 +83,11 @@ public class SingleArticleFragment extends Fragment
 
         mProgress = (ProgressBar)v.findViewById(R.id.article_body_progress);
 
-        mTitle      = (TextView)v.findViewById(R.id.article_title_textView);
-        mBody       = (TextView)v.findViewById(R.id.article_body_textView);
-        mTimestamp  = (TextView)v.findViewById(R.id.article_timestamp_textView);
-        mByline     = (TextView)v.findViewById(R.id.article_byline_TextView);
-        mAsset      = (ImageView)v.findViewById(R.id.article_asset_ImageView);
+        mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
+        mBody       = (TextView) v.findViewById(R.id.article_body_textView);
+        mTimestamp  = (TextView) v.findViewById(R.id.article_timestamp_textView);
+        mByline     = (TextView) v.findViewById(R.id.article_byline_TextView);
+        mAsset      = (ImageView) v.findViewById(R.id.article_asset_ImageView);
 
         mTitle.setText(mArticle.getTitle());
         mByline.setText(mArticle.getByline());
@@ -118,7 +125,120 @@ public class SingleArticleFragment extends Fragment
             ImageLoader.getInstance().displayImage(url, mAsset);
         }
 
+        if (mArticle.hasAudio())
+        {
+            mAudioPlayer = new MediaPlayer();
+            mAudioController = new MediaController(getActivity());
+
+            mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
+            {
+                @Override
+                public void onPrepared(MediaPlayer mp)
+                {
+                    mAudioController.setMediaPlayer(new MediaController.MediaPlayerControl()
+                    {
+                        @Override
+                        public void start()
+                        {
+                            mAudioPlayer.start();
+                        }
+
+                        @Override
+                        public void pause()
+                        {
+                            mAudioPlayer.pause();
+                        }
+
+                        @Override
+                        public int getDuration()
+                        {
+                            return mAudioPlayer.getDuration();
+                        }
+
+                        @Override
+                        public int getCurrentPosition()
+                        {
+                            return mAudioPlayer.getCurrentPosition();
+                        }
+
+                        @Override
+                        public void seekTo(int pos)
+                        {
+                            mAudioPlayer.seekTo(pos);
+                        }
+
+                        @Override
+                        public boolean isPlaying()
+                        {
+                            return mAudioPlayer.isPlaying();
+                        }
+
+                        @Override
+                        public int getBufferPercentage()
+                        {
+                            return 0;
+                        }
+
+                        @Override
+                        public boolean canPause()
+                        {
+                            return true;
+                        }
+
+                        @Override
+                        public boolean canSeekBackward()
+                        {
+                            return true;
+                        }
+
+                        @Override
+                        public boolean canSeekForward()
+                        {
+                            return true;
+                        }
+
+                        @Override
+                        public int getAudioSessionId()
+                        {
+                            return mAudioPlayer.getAudioSessionId();
+                        }
+                    });
+
+                    mAudioController.setAnchorView(mTitle);
+
+                    Handler handler = new Handler();
+                    handler.post(new Runnable()
+                    {
+                        public void run()
+                        {
+                            mAudioController.setEnabled(true);
+                            mAudioController.show(0);
+                        }
+                    });
+                }
+            });
+
+            try
+            {
+                mAudioPlayer.setDataSource(mArticle.getAudio().get(0).getUrl());
+                mAudioPlayer.prepareAsync();
+            } catch(IOException e) {
+                // TODO: Handle error
+                e.printStackTrace();
+            }
+        }
+
         return v;
+    }
+
+
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        mAudioPlayer.release();
+        mAudioPlayer = null;
     }
 
 
