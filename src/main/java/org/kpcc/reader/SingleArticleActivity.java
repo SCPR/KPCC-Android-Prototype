@@ -8,14 +8,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class SingleArticleActivity extends FragmentActivity
@@ -24,13 +24,10 @@ public class SingleArticleActivity extends FragmentActivity
     private final static String TAG = "org.kpcc.reader.DEBUG.SingleArticleActivity";
 
     private ViewPager mViewPager;
-    private ArrayList<Article> mArticles;
+    private ArticleCollection mArticles;
     private boolean mLoadingArticles = false;
     private int mLastPage;
-    private HashMap<String, String> mParams;    // We want to keep track of params so we can load
-                                                // the appropriate content when the
-                                                // users reaches the last item in the view pager.
-
+    private QueryParams mParams;
 
 
     @Override
@@ -38,11 +35,13 @@ public class SingleArticleActivity extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
 
-        mParams = (HashMap<String,String>) getIntent()
+        HashMap<String, String> params = (HashMap<String, String>) getIntent()
             .getSerializableExtra(ArticleListFragment.EXTRA_REQUEST_PARAMS);
+        mParams = QueryParams.buildFromHashMap(params);
+
         mLastPage = getIntent().getIntExtra(ArticleListFragment.EXTRA_LAST_PAGE, 1);
 
-        mArticles = ArticleCollection.get(this).getArticles();
+        mArticles = ArticleCollection.get(this);
         setContentView(R.layout.activity_single_article);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,31 +60,10 @@ public class SingleArticleActivity extends FragmentActivity
                 // fetch more!
                 if (pos + 1 == getCount() && !mLoadingArticles)
                 {
-                    mLoadingArticles = true;
-                    mParams.put("page", String.valueOf(mLastPage + 1));
-                    ArticleClient.getCollection(hashToParams(mParams), new JsonHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(JSONArray articles) {
-                            ArrayList<Article> collection = new ArrayList<Article>();
-
-                            try {
-                                for (int i = 0; i < articles.length(); i++) {
-                                    Article article = Article.buildFromJson(articles.getJSONObject(i));
-                                    collection.add(article);
-                                }
-                            } catch (JSONException e) {
-                                // TODO: Handle this error more nicely.
-                                e.printStackTrace();
-                            }
-
-                            for (Article article : collection) mArticles.add(article);
-                            mLastPage += 1;
-                            mLoadingArticles = false;
-                        }
-                    });
+                    fetchArticles(nextPageParams());
                 }
 
-                Article article = mArticles.get(pos);
+                Article article = mArticles.getArticles().get(pos);
                 return SingleArticleFragment.newInstance(article.getId());
             }
 
@@ -118,7 +96,7 @@ public class SingleArticleActivity extends FragmentActivity
 
         for (int i=0; i < mArticles.size(); i++)
         {
-            if (mArticles.get(i).getId().equals(articleId))
+            if (mArticles.getArticles().get(i).getId().equals(articleId))
             {
                 mViewPager.setCurrentItem(i);
                 break;
@@ -127,16 +105,67 @@ public class SingleArticleActivity extends FragmentActivity
     }
 
 
-    private RequestParams hashToParams(HashMap<String, String> hash)
+    private void fetchArticles(QueryParams params)
     {
-        RequestParams params = new RequestParams();
+        if (mLoadingArticles) return;
+        setIsLoading(true);
 
-        for (Map.Entry<String, String> entry : hash.entrySet())
+        mParams.merge(params);
+        ArticleClient.getCollection(mParams.toParams(), new ArticleJsonResponseHandler());
+    }
+
+
+    private QueryParams nextPageParams()
+    {
+        QueryParams params = new QueryParams();
+        params.put("page", String.valueOf(mLastPage + 1));
+        return params;
+    }
+
+
+    private void setIsLoading(boolean isLoading)
+    {
+        mLoadingArticles = isLoading;
+    }
+
+
+    private class ArticleJsonResponseHandler extends JsonHttpResponseHandler
+    {
+
+        @Override
+        public void onSuccess(JSONArray articles)
         {
-            params.put(entry.getKey(), entry.getValue());
+            ArrayList<Article> collection = new ArrayList<Article>();
+
+            try
+            {
+                for (int i = 0; i < articles.length(); i++)
+                {
+                    Article article = Article.buildFromJson(articles.getJSONObject(i));
+                    collection.add(article);
+                }
+            } catch (JSONException e) {
+                // TODO: Handle this error more nicely.
+                e.printStackTrace();
+            }
+
+            // Update the ArticleCollection articles.
+            for (Article article : collection) mArticles.add(article);
+            mViewPager.getAdapter().notifyDataSetChanged();
+
+            // TODO: Find a better place to increase the page number.
+            mLastPage += 1;
+
+            setIsLoading(false);
         }
 
-        return params;
+        @Override
+        public void onFailure(
+            int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+        {
+            // TODO: Handle errors mo' betta
+            setIsLoading(false);
+        }
     }
 
 }

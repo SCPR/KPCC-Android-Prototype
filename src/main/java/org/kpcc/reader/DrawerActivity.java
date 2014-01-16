@@ -13,8 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.HashMap;
-
 
 // Abstract Activity which implements the Drawer functionality.
 // All activities which have the drawer should extend this activity.
@@ -106,7 +104,7 @@ public abstract class DrawerActivity extends FragmentActivity
 
     protected void onNavItemSelected(int id)
     {
-        HashMap<String, String> params = new HashMap<String, String>();
+        QueryParams params = new QueryParams();
 
         switch (id)
         {
@@ -157,7 +155,7 @@ public abstract class DrawerActivity extends FragmentActivity
     }
 
 
-    private void buildListFragment(HashMap<String, String> params)
+    private void buildListFragment(QueryParams params)
     {
         getSupportFragmentManager().beginTransaction()
             .replace(R.id.content_frame, ArticleListFragment.newInstance(params))

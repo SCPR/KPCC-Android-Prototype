@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.Header;
@@ -24,8 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ArticleListFragment extends Fragment
@@ -44,11 +41,10 @@ public class ArticleListFragment extends Fragment
     private boolean mLoadingArticles = false;
     private RelativeLayout mLoadingIndicator;
     private int mLastPage = 0; // This gets updated on a successful page load.
-    private HashMap<String, String> mParams = new HashMap<String, String>();
-    private ArticleAdapter mAdapter;
+    private QueryParams mParams = new QueryParams();
 
 
-    public static ArticleListFragment newInstance(HashMap<String, String> params)
+    public static ArticleListFragment newInstance(QueryParams params)
     {
         Bundle args = new Bundle();
 
@@ -75,10 +71,10 @@ public class ArticleListFragment extends Fragment
         mParams.put("page", QUERY_DEFAULT_PAGE);
 
         // Fill in params from passed-in arguments
-        HashMap<String, String> params =
-            (HashMap<String, String>) getArguments().getSerializable(EXTRA_REQUEST_PARAMS);
+        QueryParams extraParams =
+            (QueryParams) getArguments().getSerializable(EXTRA_REQUEST_PARAMS);
 
-        mergeParams(mParams, params);
+        mParams.merge(extraParams);
 
         // Get whatever the current Article set is.
         // It may be overridden when the HTTP query is finished.
@@ -111,9 +107,11 @@ public class ArticleListFragment extends Fragment
             {
                 Article a = ((ArticleAdapter) mGridView.getAdapter()).getItem(position);
                 Intent i = new Intent(getActivity(), SingleArticleActivity.class);
+
                 i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
-                i.putExtra(EXTRA_REQUEST_PARAMS, mParams);
+                i.putExtra(EXTRA_REQUEST_PARAMS, mParams.toHashMap());
                 i.putExtra(EXTRA_LAST_PAGE, mLastPage);
+
                 startActivity(i);
             }
         });
@@ -143,54 +141,21 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void fetchArticles(HashMap<String, String> params, boolean replace)
+    private void fetchArticles(QueryParams params, boolean replace)
     {
         // Add a loading mutex to prevent loading too much.
         // The lock gets released in the onSuccess callback.
         if (mLoadingArticles) return;
         setIsLoading(true);
 
-        mergeParams(mParams, params);
-        RequestParams requestParams = hashToParams(mParams);
-
-        ArticleClient.getCollection(requestParams, new ArticleJsonResponseHandler(replace));
+        mParams.merge(params);
+        ArticleClient.getCollection(mParams.toParams(), new ArticleJsonResponseHandler(replace));
     }
 
 
-    // Yes, these are two nearly identical methods. RequestParams and HashMap need to share
-    // a roof under a single class so that they can be interchangeable in some regard,
-    // like in these two methods.
-    // Either that or RequestParams needs to be cast-able to a HashMap.
-    private void mergeParams(HashMap<String, String> original, HashMap<String, String>... updaters)
+    private QueryParams nextPageParams()
     {
-        for (HashMap<String, String> updater : updaters)
-        {
-            if (updater == null) continue;
-
-            for (Map.Entry<String, String> entry : updater.entrySet())
-            {
-                original.put(entry.getKey(), entry.getValue());
-            }
-        }
-    }
-
-
-    private RequestParams hashToParams(HashMap<String, String> hash)
-    {
-        RequestParams params = new RequestParams();
-
-        for (Map.Entry<String, String> entry : hash.entrySet())
-        {
-            params.put(entry.getKey(), entry.getValue());
-        }
-
-        return params;
-    }
-
-
-    private HashMap<String, String> nextPageParams()
-    {
-        HashMap<String, String> params = new HashMap<String, String>();
+        QueryParams params = new QueryParams();
         params.put("page", String.valueOf(mLastPage + 1));
         return params;
     }
@@ -213,8 +178,8 @@ public class ArticleListFragment extends Fragment
 
         if (mArticles != null)
         {
-            mAdapter = new ArticleAdapter(mArticles);
-            mGridView.setAdapter(mAdapter);
+            ArticleAdapter adapter = new ArticleAdapter(mArticles);
+            mGridView.setAdapter(adapter);
         } else {
             mGridView.setAdapter(null);
         }
@@ -265,7 +230,10 @@ public class ArticleListFragment extends Fragment
                 // Just add the extra articles to this activity's adapter.
                 // The adapter will handle adding them to the collection.
                 // NOTE: We would use ArrayAdapter#addAll, but it requires API level 11+.
-                for (Article article : collection) mAdapter.add(article);
+                for (Article article : collection)
+                {
+                    ((ArticleAdapter) mGridView.getAdapter()).add(article);
+                }
 
                 // We are *assuming* that if we get here (i.e. we're appending articles
                 // to the full collection), this was a pagination request, so we'll
@@ -282,7 +250,7 @@ public class ArticleListFragment extends Fragment
             int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
         {
             // TODO: Handle errors mo' betta
-            mLoadingArticles = false;
+            setIsLoading(false);
         }
     }
 
