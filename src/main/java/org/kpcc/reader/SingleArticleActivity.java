@@ -7,8 +7,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class SingleArticleActivity extends FragmentActivity
@@ -19,6 +26,7 @@ public class SingleArticleActivity extends FragmentActivity
     private ViewPager mViewPager;
     private ArrayList<Article> mArticles;
     private boolean mLoadingArticles = false;
+    private int mLastPage;
     private HashMap<String, String> mParams;    // We want to keep track of params so we can load
                                                 // the appropriate content when the
                                                 // users reaches the last item in the view pager.
@@ -32,6 +40,7 @@ public class SingleArticleActivity extends FragmentActivity
 
         mParams = (HashMap<String,String>) getIntent()
             .getSerializableExtra(ArticleListFragment.EXTRA_REQUEST_PARAMS);
+        mLastPage = getIntent().getIntExtra(ArticleListFragment.EXTRA_LAST_PAGE, 1);
 
         mArticles = ArticleCollection.get(this).getArticles();
         setContentView(R.layout.activity_single_article);
@@ -50,8 +59,30 @@ public class SingleArticleActivity extends FragmentActivity
             {
                 // If this is the last item in the collection,
                 // fetch more!
-                if (pos + 1 == getCount())
+                if (pos + 1 == getCount() && !mLoadingArticles)
                 {
+                    mLoadingArticles = true;
+                    mParams.put("page", String.valueOf(mLastPage + 1));
+                    ArticleClient.getCollection(hashToParams(mParams), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(JSONArray articles) {
+                            ArrayList<Article> collection = new ArrayList<Article>();
+
+                            try {
+                                for (int i = 0; i < articles.length(); i++) {
+                                    Article article = Article.buildFromJson(articles.getJSONObject(i));
+                                    collection.add(article);
+                                }
+                            } catch (JSONException e) {
+                                // TODO: Handle this error more nicely.
+                                e.printStackTrace();
+                            }
+
+                            for (Article article : collection) mArticles.add(article);
+                            mLastPage += 1;
+                            mLoadingArticles = false;
+                        }
+                    });
                 }
 
                 Article article = mArticles.get(pos);
@@ -93,6 +124,19 @@ public class SingleArticleActivity extends FragmentActivity
                 break;
             }
         }
+    }
+
+
+    private RequestParams hashToParams(HashMap<String, String> hash)
+    {
+        RequestParams params = new RequestParams();
+
+        for (Map.Entry<String, String> entry : hash.entrySet())
+        {
+            params.put(entry.getKey(), entry.getValue());
+        }
+
+        return params;
     }
 
 }

@@ -31,6 +31,7 @@ import java.util.Map;
 public class ArticleListFragment extends Fragment
 {
     public final static String EXTRA_REQUEST_PARAMS = "org.kpcc.reader.request_params";
+    public final static String EXTRA_LAST_PAGE = "org.kpcc.reader.last_page";
 
     private final static String TAG = "org.kpcc.reader.DEBUG.ArticleListFragment";
     private final static int LOAD_THRESHOLD = 0;
@@ -112,7 +113,7 @@ public class ArticleListFragment extends Fragment
                 Intent i = new Intent(getActivity(), SingleArticleActivity.class);
                 i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
                 i.putExtra(EXTRA_REQUEST_PARAMS, mParams);
-
+                i.putExtra(EXTRA_LAST_PAGE, mLastPage);
                 startActivity(i);
             }
         });
