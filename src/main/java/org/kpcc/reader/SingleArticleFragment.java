@@ -14,11 +14,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,6 +37,7 @@ public class SingleArticleFragment extends Fragment
     public static final String EXTRA_QUERY_PARAMS = "org.kpcc.reader.query_params";
 
     private Article mArticle;
+    private ScrollView mScrollView;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
@@ -83,6 +86,7 @@ public class SingleArticleFragment extends Fragment
 
         mProgress = (ProgressBar)v.findViewById(R.id.article_body_progress);
 
+        mScrollView = (ScrollView) v.findViewById(R.id.single_article);
         mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
         mBody       = (TextView) v.findViewById(R.id.article_body_textView);
         mTimestamp  = (TextView) v.findViewById(R.id.article_timestamp_textView);
@@ -204,7 +208,7 @@ public class SingleArticleFragment extends Fragment
                         }
                     });
 
-                    mAudioController.setAnchorView(mTitle);
+                    mAudioController.setAnchorView(mScrollView);
 
                     Handler handler = new Handler();
                     handler.post(new Runnable()
@@ -226,19 +230,44 @@ public class SingleArticleFragment extends Fragment
                 // TODO: Handle error
                 e.printStackTrace();
             }
+
+            mScrollView.setOnTouchListener(new View.OnTouchListener()
+            {
+                @Override
+                public boolean onTouch(View v, MotionEvent event)
+                {
+                    mAudioController.show();
+                    return false;
+                }
+            });
         }
 
         return v;
     }
 
 
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+
+        if (mAudioPlayer != null)
+        {
+            mAudioPlayer.pause();
+        }
+    }
+
 
     @Override
     public void onDestroy()
     {
         super.onDestroy();
-        mAudioPlayer.release();
-        mAudioPlayer = null;
+
+        if (mAudioPlayer != null)
+        {
+            mAudioPlayer.release();
+            mAudioPlayer = null;
+        }
     }
 
 
