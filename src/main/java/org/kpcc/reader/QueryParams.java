@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import com.loopj.android.http.RequestParams;
 

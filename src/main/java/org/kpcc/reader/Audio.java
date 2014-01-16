@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import org.json.JSONException;
 import org.json.JSONObject;

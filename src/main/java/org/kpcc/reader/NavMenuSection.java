@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 // A Section header in the Nav Drawer.
 public class NavMenuSection implements NavDrawerItem

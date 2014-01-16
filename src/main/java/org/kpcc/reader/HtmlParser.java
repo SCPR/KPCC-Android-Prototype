@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.os.AsyncTask;
 import android.text.Html;

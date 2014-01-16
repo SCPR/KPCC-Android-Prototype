@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
@@ -31,10 +31,10 @@ import java.io.IOException;
 public class SingleArticleFragment extends Fragment
 {
 
-    private static final String TAG = "org.kpcc.reader.DEBUG.SingleArticleFragment";
+    private static final String TAG = "org.scpr.reader.DEBUG.SingleArticleFragment";
 
-    public static final String EXTRA_ARTICLE_ID = "org.kpcc.reader.article_id";
-    public static final String EXTRA_QUERY_PARAMS = "org.kpcc.reader.query_params";
+    public static final String EXTRA_ARTICLE_ID = "org.scpr.reader.article_id";
+    public static final String EXTRA_QUERY_PARAMS = "org.scpr.reader.query_params";
 
     private Article mArticle;
     private ScrollView mScrollView;

@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 public class ArticleListActivity extends DrawerActivity
 {
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.ArticleListActivity";
+    private final static String TAG = "org.scpr.reader.DEBUG.ArticleListActivity";
 
 
     @Override

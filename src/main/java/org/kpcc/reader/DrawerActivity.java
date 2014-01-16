@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.ListView;
 public abstract class DrawerActivity extends FragmentActivity
 {
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.DrawerActivity";
+    private final static String TAG = "org.scpr.reader.DEBUG.DrawerActivity";
 
     protected abstract int getMainLayoutId();
 

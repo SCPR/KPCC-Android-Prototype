@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,10 +27,10 @@ import java.util.ArrayList;
 
 public class ArticleListFragment extends Fragment
 {
-    public final static String EXTRA_REQUEST_PARAMS = "org.kpcc.reader.request_params";
-    public final static String EXTRA_LAST_PAGE = "org.kpcc.reader.last_page";
+    public final static String EXTRA_REQUEST_PARAMS = "org.scpr.reader.request_params";
+    public final static String EXTRA_LAST_PAGE = "org.scpr.reader.last_page";
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.ArticleListFragment";
+    private final static String TAG = "org.scpr.reader.DEBUG.ArticleListFragment";
     private final static int LOAD_THRESHOLD = 0;
     private final static String QUERY_DEFAULT_TYPES = "news,blogs,segments";
     private final static String QUERY_DEFAULT_LIMIT = "20";

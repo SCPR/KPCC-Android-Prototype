@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.content.Context;
 import android.view.LayoutInflater;

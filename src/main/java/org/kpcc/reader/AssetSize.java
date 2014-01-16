@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.net.ParseException;
 
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class AssetSize
 {
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.AssetSize";
+    private final static String TAG = "org.scpr.reader.DEBUG.AssetSize";
 
     private String mUrl;
     private int mWidth;

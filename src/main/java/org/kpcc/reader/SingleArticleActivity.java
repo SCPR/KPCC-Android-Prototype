@@ -1,4 +1,4 @@
-package org.kpcc.reader;
+package org.scpr.reader;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class SingleArticleActivity extends FragmentActivity
 {
 
-    private final static String TAG = "org.kpcc.reader.DEBUG.SingleArticleActivity";
+    private final static String TAG = "org.scpr.reader.DEBUG.SingleArticleActivity";
 
     private ViewPager mViewPager;
     private ArticleCollection mArticles;
