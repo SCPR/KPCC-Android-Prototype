@@ -30,11 +30,10 @@ import java.util.Map;
 
 public class ArticleListFragment extends Fragment
 {
+    public final static String EXTRA_REQUEST_PARAMS = "org.kpcc.reader.request_params";
+
     private final static String TAG = "org.kpcc.reader.DEBUG.ArticleListFragment";
-
     private final static int LOAD_THRESHOLD = 0;
-    private final static String EXTRA_REQUEST_PARAMS = "org.kpcc.reader.request_params";
-
     private final static String QUERY_DEFAULT_TYPES = "news,blogs,segments";
     private final static String QUERY_DEFAULT_LIMIT = "20";
     private final static String QUERY_DEFAULT_PAGE = "1";
@@ -44,7 +43,7 @@ public class ArticleListFragment extends Fragment
     private boolean mLoadingArticles = false;
     private RelativeLayout mLoadingIndicator;
     private int mLastPage = 0; // This gets updated on a successful page load.
-    private HashMap<String, String> mDefaultParams = new HashMap<String, String>();
+    private HashMap<String, String> mParams = new HashMap<String, String>();
     private ArticleAdapter mAdapter;
 
 
@@ -70,15 +69,15 @@ public class ArticleListFragment extends Fragment
         super.onCreate(savedInstanceState);
 
         // Setup default params
-        mDefaultParams.put("types", QUERY_DEFAULT_TYPES);
-        mDefaultParams.put("limit", QUERY_DEFAULT_LIMIT);
-        mDefaultParams.put("page", QUERY_DEFAULT_PAGE);
+        mParams.put("types", QUERY_DEFAULT_TYPES);
+        mParams.put("limit", QUERY_DEFAULT_LIMIT);
+        mParams.put("page", QUERY_DEFAULT_PAGE);
 
         // Fill in params from passed-in arguments
         HashMap<String, String> params =
             (HashMap<String, String>) getArguments().getSerializable(EXTRA_REQUEST_PARAMS);
 
-        mergeParams(mDefaultParams, params);
+        mergeParams(mParams, params);
 
         // Get whatever the current Article set is.
         // It may be overridden when the HTTP query is finished.
@@ -112,6 +111,7 @@ public class ArticleListFragment extends Fragment
                 Article a = ((ArticleAdapter) mGridView.getAdapter()).getItem(position);
                 Intent i = new Intent(getActivity(), SingleArticleActivity.class);
                 i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
+                i.putExtra(EXTRA_REQUEST_PARAMS, mParams);
 
                 startActivity(i);
             }
@@ -126,9 +126,7 @@ public class ArticleListFragment extends Fragment
                 {
                     if (view.getLastVisiblePosition() >= view.getCount() - 1 - LOAD_THRESHOLD)
                     {
-                        HashMap<String, String> params = new HashMap<String, String>();
-                        params.put("page", String.valueOf(mLastPage + 1));
-                        fetchArticles(params, false);
+                        fetchArticles(nextPageParams(), false);
                     }
                 }
             }
@@ -144,15 +142,15 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void fetchArticles(HashMap<String, String> overrideParams, boolean replace)
+    private void fetchArticles(HashMap<String, String> params, boolean replace)
     {
         // Add a loading mutex to prevent loading too much.
         // The lock gets released in the onSuccess callback.
         if (mLoadingArticles) return;
         setIsLoading(true);
 
-        RequestParams requestParams = new RequestParams();
-        mergeParams(requestParams, mDefaultParams, overrideParams);
+        mergeParams(mParams, params);
+        RequestParams requestParams = hashToParams(mParams);
 
         ArticleClient.getCollection(requestParams, new ArticleJsonResponseHandler(replace));
     }
@@ -176,17 +174,24 @@ public class ArticleListFragment extends Fragment
     }
 
 
-    private void mergeParams(RequestParams original, HashMap<String, String>... updaters)
+    private RequestParams hashToParams(HashMap<String, String> hash)
     {
-        for (HashMap<String, String> updater : updaters)
-        {
-            if (updater == null) continue;
+        RequestParams params = new RequestParams();
 
-            for (Map.Entry<String, String> entry : updater.entrySet())
-            {
-                original.put(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<String, String> entry : hash.entrySet())
+        {
+            params.put(entry.getKey(), entry.getValue());
         }
+
+        return params;
+    }
+
+
+    private HashMap<String, String> nextPageParams()
+    {
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("page", String.valueOf(mLastPage + 1));
+        return params;
     }
 
 
@@ -239,6 +244,7 @@ public class ArticleListFragment extends Fragment
                     collection.add(article);
                 }
             } catch (JSONException e) {
+                // TODO: Handle this error more nicely.
                 e.printStackTrace();
             }
 
@@ -261,7 +267,7 @@ public class ArticleListFragment extends Fragment
                 for (Article article : collection) mAdapter.add(article);
 
                 // We are *assuming* that if we get here (i.e. we're appending articles
-                // do the full collection), this was a pagination request, so we'll
+                // to the full collection), this was a pagination request, so we'll
                 // increase the page.
                 // TODO: Find a better place to increase the page number.
                 mLastPage += 1;

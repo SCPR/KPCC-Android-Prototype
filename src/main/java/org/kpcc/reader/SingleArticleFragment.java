@@ -24,8 +24,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class SingleArticleFragment extends Fragment
 {
 
-    public static final String EXTRA_ARTICLE_ID = "org.kpcc.reader.article_id";
     private static final String TAG = "org.kpcc.reader.DEBUG.SingleArticleFragment";
+
+    public static final String EXTRA_ARTICLE_ID = "org.kpcc.reader.article_id";
+    public static final String EXTRA_QUERY_PARAMS = "org.kpcc.reader.query_params";
 
     private Article mArticle;
     private ProgressBar mProgress;
