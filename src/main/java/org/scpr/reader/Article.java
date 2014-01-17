@@ -83,7 +83,7 @@ public class Article extends Entity
 
     public void setId(String id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -94,7 +94,7 @@ public class Article extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -105,7 +105,7 @@ public class Article extends Entity
 
     public void setShortTitle(String shortTitle)
     {
-        this.mShortTitle = shortTitle;
+        mShortTitle = shortTitle;
     }
 
 
@@ -116,7 +116,7 @@ public class Article extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 
@@ -127,7 +127,7 @@ public class Article extends Entity
 
     public void setCategory(Category category)
     {
-        this.mCategory = category;
+        mCategory = category;
     }
 
 
@@ -138,7 +138,7 @@ public class Article extends Entity
 
     public void setByline(String byline)
     {
-        this.mByline = byline;
+        mByline = byline;
     }
 
 
@@ -149,7 +149,7 @@ public class Article extends Entity
 
     public void setTimestamp(Date timestamp)
     {
-        this.mTimestamp = timestamp;
+        mTimestamp = timestamp;
     }
 
 
@@ -160,7 +160,7 @@ public class Article extends Entity
 
     public void setTeaser(String teaser)
     {
-        this.mTeaser = teaser;
+        mTeaser = teaser;
     }
 
 
@@ -171,7 +171,7 @@ public class Article extends Entity
 
     public void setBody(String body)
     {
-        this.mBody = body;
+        mBody = body;
     }
 
 
@@ -182,7 +182,7 @@ public class Article extends Entity
 
     public void setParsedBody(Spanned parsedBody)
     {
-        this.mParsedBody = parsedBody;
+        mParsedBody = parsedBody;
     }
 
 
@@ -193,7 +193,7 @@ public class Article extends Entity
 
     public void setAssets(ArrayList<Asset> assets)
     {
-        this.mAssets = assets;
+        mAssets = assets;
     }
 
     public void addAsset(Asset asset)
@@ -214,7 +214,7 @@ public class Article extends Entity
 
     public void setAudio(ArrayList<Audio> audio)
     {
-        this.mAudio = audio;
+        mAudio = audio;
     }
 
     public void addAudio(Audio audio)
@@ -235,7 +235,7 @@ public class Article extends Entity
 
     public void setAttributions(ArrayList<Attribution> attributions)
     {
-        this.mAttributions = attributions;
+        mAttributions = attributions;
     }
 
     public void addAttribution(Attribution attribution)

@@ -50,7 +50,7 @@ public class Bucket extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -61,7 +61,7 @@ public class Bucket extends Entity
 
     public void setId(String id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -72,7 +72,7 @@ public class Bucket extends Entity
 
     public void setUpdatedAt(Date updatedAt)
     {
-        this.mUpdatedAt = updatedAt;
+        mUpdatedAt = updatedAt;
     }
 
 
@@ -83,7 +83,7 @@ public class Bucket extends Entity
 
     public void setArticles(ArrayList<Article> articles)
     {
-        this.mArticles = articles;
+        mArticles = articles;
     }
 
     public void addArticle(Article article)

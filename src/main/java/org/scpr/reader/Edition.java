@@ -46,7 +46,7 @@ public class Edition extends Entity
 
     public void setId(int id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -57,7 +57,7 @@ public class Edition extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -68,7 +68,7 @@ public class Edition extends Entity
 
     public void setPublishedAt(Date publishedAt)
     {
-        this.mPublishedAt = publishedAt;
+        mPublishedAt = publishedAt;
     }
 
 
@@ -79,7 +79,7 @@ public class Edition extends Entity
 
     public void setAbstracts(ArrayList<Abstract> abstracts)
     {
-        this.mAbstracts = abstracts;
+        mAbstracts = abstracts;
     }
 
     public void addAbstract(Abstract abs)

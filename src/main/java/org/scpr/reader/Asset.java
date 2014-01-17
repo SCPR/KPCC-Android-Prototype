@@ -52,7 +52,7 @@ public class Asset extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -63,7 +63,7 @@ public class Asset extends Entity
 
     public void setCaption(String caption)
     {
-        this.mCaption = caption;
+        mCaption = caption;
     }
 
 
@@ -75,7 +75,7 @@ public class Asset extends Entity
 
     public void setCredit(String credit)
     {
-        this.mCredit = credit;
+        mCredit = credit;
     }
 
 
@@ -86,7 +86,7 @@ public class Asset extends Entity
 
     public void setSizeThumbnail(AssetSize assetSize)
     {
-        this.mSizeThumbnail = assetSize;
+        mSizeThumbnail = assetSize;
     }
 
 
@@ -108,7 +108,7 @@ public class Asset extends Entity
 
     public void setSizeLarge(AssetSize assetSize)
     {
-        this.mSizeLarge = assetSize;
+        mSizeLarge = assetSize;
     }
 
 
@@ -119,7 +119,7 @@ public class Asset extends Entity
 
     public void setSizeFull(AssetSize assetSize)
     {
-        this.mSizeFull = assetSize;
+        mSizeFull = assetSize;
     }
 
 
@@ -130,7 +130,7 @@ public class Asset extends Entity
 
     public void setNativeType(AssetNativeType nativeType)
     {
-        this.mNativeType = nativeType;
+        mNativeType = nativeType;
     }
 
 }

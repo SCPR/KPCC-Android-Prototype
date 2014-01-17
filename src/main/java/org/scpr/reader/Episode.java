@@ -61,7 +61,7 @@ public class Episode extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -72,7 +72,7 @@ public class Episode extends Entity
 
     public void setSummary(String summary)
     {
-        this.mSummary = summary;
+        mSummary = summary;
     }
 
 
@@ -83,7 +83,7 @@ public class Episode extends Entity
 
     public void setAirDate(Date airDate)
     {
-        this.mAirDate = airDate;
+        mAirDate = airDate;
     }
 
 
@@ -94,7 +94,7 @@ public class Episode extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 
@@ -105,7 +105,7 @@ public class Episode extends Entity
 
     public void setProgram(Program program)
     {
-        this.mProgram = program;
+        mProgram = program;
     }
 
 
@@ -116,7 +116,7 @@ public class Episode extends Entity
 
     public void setAssets(ArrayList<Asset> assets)
     {
-        this.mAssets = assets;
+        mAssets = assets;
     }
 
     public void addAsset(Asset asset)
@@ -137,7 +137,7 @@ public class Episode extends Entity
 
     public void setAudio(ArrayList<Audio> audio)
     {
-        this.mAudio = audio;
+        mAudio = audio;
     }
 
     public void addAudio(Audio audio)
@@ -158,7 +158,7 @@ public class Episode extends Entity
 
     public void setSegments(ArrayList<Article> segments)
     {
-        this.mSegments = segments;
+        mSegments = segments;
     }
 
     public void addSegment(Article segment)

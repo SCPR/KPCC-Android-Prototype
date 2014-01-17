@@ -39,7 +39,7 @@ public class Category extends Entity
 
     public void setId(int id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -50,7 +50,7 @@ public class Category extends Entity
 
     public void setSlug(String slug)
     {
-        this.mSlug = slug;
+        mSlug = slug;
     }
 
 
@@ -61,7 +61,7 @@ public class Category extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -72,7 +72,7 @@ public class Category extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 }

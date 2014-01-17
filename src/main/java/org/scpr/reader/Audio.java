@@ -50,7 +50,7 @@ public class Audio extends Entity
 
     public void setId(int id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -61,7 +61,7 @@ public class Audio extends Entity
 
     public void setDescription(String description)
     {
-        this.mDescription = description;
+        mDescription = description;
     }
 
 
@@ -72,7 +72,7 @@ public class Audio extends Entity
 
     public void setUrl(String url)
     {
-        this.mUrl = url;
+        mUrl = url;
     }
 
 
@@ -83,7 +83,7 @@ public class Audio extends Entity
 
     public void setByline(String byline)
     {
-        this.mByline = byline;
+        mByline = byline;
     }
 
 
@@ -94,7 +94,7 @@ public class Audio extends Entity
 
     public void setUploadedAt(Date uploadedAt)
     {
-        this.mUploadedAt = uploadedAt;
+        mUploadedAt = uploadedAt;
     }
 
 
@@ -105,7 +105,7 @@ public class Audio extends Entity
 
     public void setPosition(int position)
     {
-        this.mPosition = position;
+        mPosition = position;
     }
 
 
@@ -116,7 +116,7 @@ public class Audio extends Entity
 
     public void setDurationSeconds(int durationSeconds)
     {
-        this.mDurationSeconds = durationSeconds;
+        mDurationSeconds = durationSeconds;
     }
 
 
@@ -127,7 +127,7 @@ public class Audio extends Entity
 
     public void setFilesizeBytes(int filesizeBytes)
     {
-        this.mFilesizeBytes = filesizeBytes;
+        mFilesizeBytes = filesizeBytes;
     }
 
 
@@ -138,7 +138,7 @@ public class Audio extends Entity
 
     public void setArticleId(String articleId)
     {
-        this.mArticleId = articleId;
+        mArticleId = articleId;
     }
 
 }

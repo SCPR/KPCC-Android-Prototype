@@ -36,7 +36,7 @@ public class AssetNativeType extends Entity
 
     public void setType(String type)
     {
-        this.mType = type;
+        mType = type;
     }
 
 
@@ -47,7 +47,7 @@ public class AssetNativeType extends Entity
 
     public void setId(String id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 }

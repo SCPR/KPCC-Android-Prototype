@@ -44,7 +44,7 @@ public class Blog extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -55,7 +55,7 @@ public class Blog extends Entity
 
     public void setId(String id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -66,7 +66,7 @@ public class Blog extends Entity
 
     public void setTagline(String tagline)
     {
-        this.mTagline = tagline;
+        mTagline = tagline;
     }
 
 
@@ -77,7 +77,7 @@ public class Blog extends Entity
 
     public void setDescription(String description)
     {
-        this.mDescription = description;
+        mDescription = description;
     }
 
 
@@ -88,7 +88,7 @@ public class Blog extends Entity
 
     public void setRssUrl(String rssUrl)
     {
-        this.mRssUrl = rssUrl;
+        mRssUrl = rssUrl;
     }
 
 
@@ -99,7 +99,7 @@ public class Blog extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 }

@@ -59,7 +59,7 @@ public class Program extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -70,7 +70,7 @@ public class Program extends Entity
 
     public void setId(String id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -81,7 +81,7 @@ public class Program extends Entity
 
     public void setHost(String host)
     {
-        this.mHost = host;
+        mHost = host;
     }
 
 
@@ -92,7 +92,7 @@ public class Program extends Entity
 
     public void setAirStatus(String airStatus)
     {
-        this.mAirStatus = airStatus;
+        mAirStatus = airStatus;
     }
 
 
@@ -103,7 +103,7 @@ public class Program extends Entity
 
     public void setTwitterHandle(String twitterHandle)
     {
-        this.mTwitterHandle = twitterHandle;
+        mTwitterHandle = twitterHandle;
     }
 
 
@@ -114,7 +114,7 @@ public class Program extends Entity
 
     public void setAirtime(String airtime)
     {
-        this.mAirtime = airtime;
+        mAirtime = airtime;
     }
 
 
@@ -125,7 +125,7 @@ public class Program extends Entity
 
     public void setDescription(String description)
     {
-        this.mDescription = description;
+        mDescription = description;
     }
 
 
@@ -136,7 +136,7 @@ public class Program extends Entity
 
     public void setPodcastUrl(String podcastUrl)
     {
-        this.mPodcastUrl = podcastUrl;
+        mPodcastUrl = podcastUrl;
     }
 
 
@@ -147,7 +147,7 @@ public class Program extends Entity
 
     public void setRssUrl(String rssUrl)
     {
-        this.mRssUrl = rssUrl;
+        mRssUrl = rssUrl;
     }
 
 
@@ -158,7 +158,7 @@ public class Program extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 }

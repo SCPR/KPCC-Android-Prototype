@@ -48,7 +48,7 @@ public class ScheduleOccurrence extends Entity
 
     public void setTitle(String title)
     {
-        this.mTitle = title;
+        mTitle = title;
     }
 
 
@@ -59,7 +59,7 @@ public class ScheduleOccurrence extends Entity
 
     public void setUrl(String url)
     {
-        this.mUrl = url;
+        mUrl = url;
     }
 
 
@@ -70,7 +70,7 @@ public class ScheduleOccurrence extends Entity
 
     public void setStartDate(Date startDate)
     {
-        this.mStartDate = startDate;
+        mStartDate = startDate;
     }
 
 
@@ -81,18 +81,18 @@ public class ScheduleOccurrence extends Entity
 
     public void setEndDate(Date endDate)
     {
-        this.mEndDate = endDate;
+        mEndDate = endDate;
     }
 
 
-    public boolean isIsRecurring()
+    public boolean isRecurring()
     {
         return mIsRecurring;
     }
 
     public void setIsRecurring(boolean isRecurring)
     {
-        this.mIsRecurring = isRecurring;
+        mIsRecurring = isRecurring;
     }
 
 
@@ -103,7 +103,7 @@ public class ScheduleOccurrence extends Entity
 
     public void setProgram(Program program)
     {
-        this.mProgram = program;
+        mProgram = program;
     }
 
 }

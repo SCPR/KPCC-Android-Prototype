@@ -59,7 +59,7 @@ public class Abstract extends Entity
 
     public void setSource(String source)
     {
-        this.mSource = source;
+        mSource = source;
     }
 
 
@@ -70,7 +70,7 @@ public class Abstract extends Entity
 
     public void setUrl(String url)
     {
-        this.mUrl = url;
+        mUrl = url;
     }
 
 
@@ -81,7 +81,7 @@ public class Abstract extends Entity
 
     public void setHeadline(String headline)
     {
-        this.mHeadline = headline;
+        mHeadline = headline;
     }
 
 
@@ -92,7 +92,7 @@ public class Abstract extends Entity
 
     public void setSummary(String summary)
     {
-        this.mSummary = summary;
+        mSummary = summary;
     }
 
 
@@ -103,7 +103,7 @@ public class Abstract extends Entity
 
     public void setArticlePublishedAt(Date articlePublishedAt)
     {
-        this.mArticlePublishedAt = articlePublishedAt;
+        mArticlePublishedAt = articlePublishedAt;
     }
 
 
@@ -114,7 +114,7 @@ public class Abstract extends Entity
 
     public void setCategory(Category category)
     {
-        this.mCategory = category;
+        mCategory = category;
     }
 
 
@@ -125,7 +125,7 @@ public class Abstract extends Entity
 
     public void setAssets(ArrayList<Asset> assets)
     {
-        this.mAssets = assets;
+        mAssets = assets;
     }
 
     public void addAsset(Asset asset)
@@ -146,7 +146,7 @@ public class Abstract extends Entity
 
     public void setAudio(ArrayList<Audio> audio)
     {
-        this.mAudio = audio;
+        mAudio = audio;
     }
 
     public void addAudio(Audio audio)

@@ -16,8 +16,8 @@ public class Alert extends Entity
     private Date mPublishedAt;
     private String mPublicUrl;
     private String mTeaser;
-    private boolean mWasMobileNotificationSent;
-    private boolean mWasEmailNotificationSent;
+    private boolean mIsMobileNotificationSent;
+    private boolean mIsEmailNotificationSent;
 
 
     public static Alert buildFromJson(JSONObject jsonAlert)
@@ -29,8 +29,8 @@ public class Alert extends Entity
             alert.setId(jsonAlert.getInt("id"));
             alert.setHeadline(jsonAlert.getString("headline"));
             alert.setType(jsonAlert.getString("type"));
-            alert.setWasMobileNotificationSent(jsonAlert.getBoolean("mobile_notification_sent"));
-            alert.setWasEmailNotificationSent(jsonAlert.getBoolean("email_notification_sent"));
+            alert.setIsMobileNotificationSent(jsonAlert.getBoolean("mobile_notification_sent"));
+            alert.setIsEmailNotificationSent(jsonAlert.getBoolean("email_notification_sent"));
             alert.setPublishedAt(parseISODate(jsonAlert.getString("published_at")));
 
             if (jsonAlert.has("public_url")) alert.setPublicUrl(jsonAlert.getString("public_url"));
@@ -52,7 +52,7 @@ public class Alert extends Entity
 
     public void setId(int id)
     {
-        this.mId = id;
+        mId = id;
     }
 
 
@@ -63,7 +63,7 @@ public class Alert extends Entity
 
     public void setHeadline(String headline)
     {
-        this.mHeadline = headline;
+        mHeadline = headline;
     }
 
 
@@ -74,7 +74,7 @@ public class Alert extends Entity
 
     public void setType(String type)
     {
-        this.mType = type;
+        mType = type;
     }
 
 
@@ -85,7 +85,7 @@ public class Alert extends Entity
 
     public void setPublishedAt(Date publishedAt)
     {
-        this.mPublishedAt = publishedAt;
+        mPublishedAt = publishedAt;
     }
 
 
@@ -96,7 +96,7 @@ public class Alert extends Entity
 
     public void setPublicUrl(String publicUrl)
     {
-        this.mPublicUrl = publicUrl;
+        mPublicUrl = publicUrl;
     }
 
 
@@ -107,29 +107,29 @@ public class Alert extends Entity
 
     public void setTeaser(String teaser)
     {
-        this.mTeaser = teaser;
+        mTeaser = teaser;
     }
 
 
-    public boolean getWasMobileNotificationSent()
+    public boolean isMobileNotificationSent()
     {
-        return mWasMobileNotificationSent;
+        return mIsMobileNotificationSent;
     }
 
-    public void setWasMobileNotificationSent(boolean wasMobileNotificationSent)
+    public void setIsMobileNotificationSent(boolean isMobileNotificationSent)
     {
-        this.mWasMobileNotificationSent = wasMobileNotificationSent;
+        mIsMobileNotificationSent = isMobileNotificationSent;
     }
 
 
-    public boolean getWasEmailNotificationSent()
+    public boolean isEmailNotificationSent()
     {
-        return mWasEmailNotificationSent;
+        return mIsEmailNotificationSent;
     }
 
-    public void setWasEmailNotificationSent(boolean wasEmailNotificationSent)
+    public void setIsEmailNotificationSent(boolean isEmailNotificationSent)
     {
-        this.mWasEmailNotificationSent = wasEmailNotificationSent;
+        mIsEmailNotificationSent = isEmailNotificationSent;
     }
 
 }

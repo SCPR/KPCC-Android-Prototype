@@ -38,7 +38,7 @@ public class AssetSize extends Entity
 
     public void setUrl(String url)
     {
-        this.mUrl = url;
+        mUrl = url;
     }
 
 
@@ -49,7 +49,7 @@ public class AssetSize extends Entity
 
     public void setWidth(int width)
     {
-        this.mWidth = width;
+        mWidth = width;
     }
 
 
@@ -60,7 +60,7 @@ public class AssetSize extends Entity
 
     public void setHeight(int height)
     {
-        this.mHeight = height;
+        mHeight = height;
     }
 
 }
