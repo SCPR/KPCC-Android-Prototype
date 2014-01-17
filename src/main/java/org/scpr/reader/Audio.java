@@ -3,11 +3,9 @@ package org.scpr.reader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Audio
+public class Audio extends Entity
 {
     private int mId;
     private String mDescription;
@@ -34,14 +32,10 @@ public class Audio
             audio.setDurationSeconds(jsonAudio.getInt("duration"));
             audio.setFilesizeBytes(jsonAudio.getInt("filesize"));
             audio.setArticleId(jsonAudio.getString("article_obj_key"));
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            Date timestamp = sdf.parse(jsonAudio.getString("uploaded_at"));
-            audio.setUploadedAt(timestamp);
+            audio.setUploadedAt(parseISODate(jsonAudio.getString("uploaded_at")));
 
         } catch(JSONException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
+            // TODO: Handle error
             e.printStackTrace();
         }
 
@@ -59,6 +53,7 @@ public class Audio
         this.mId = id;
     }
 
+
     public String getDescription()
     {
         return mDescription;
@@ -68,6 +63,7 @@ public class Audio
     {
         this.mDescription = description;
     }
+
 
     public String getUrl()
     {
@@ -79,6 +75,7 @@ public class Audio
         this.mUrl = url;
     }
 
+
     public String getByline()
     {
         return mByline;
@@ -88,6 +85,7 @@ public class Audio
     {
         this.mByline = byline;
     }
+
 
     public Date getUploadedAt()
     {
@@ -99,6 +97,7 @@ public class Audio
         this.mUploadedAt = uploadedAt;
     }
 
+
     public int getPosition()
     {
         return mPosition;
@@ -108,6 +107,7 @@ public class Audio
     {
         this.mPosition = position;
     }
+
 
     public int getDurationSeconds()
     {
@@ -119,6 +119,7 @@ public class Audio
         this.mDurationSeconds = durationSeconds;
     }
 
+
     public int getFilesizeBytes()
     {
         return mFilesizeBytes;
@@ -128,6 +129,7 @@ public class Audio
     {
         this.mFilesizeBytes = filesizeBytes;
     }
+
 
     public String getArticleId()
     {

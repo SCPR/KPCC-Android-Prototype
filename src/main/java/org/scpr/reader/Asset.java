@@ -1,16 +1,15 @@
 package org.scpr.reader;
 
-import android.net.ParseException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Asset
+public class Asset extends Entity
 {
 
     private String mTitle;
     private String mCaption;
     private String mCredit;
+    private AssetNativeType mNativeType;
     private AssetSize mSizeThumbnail;
     private AssetSize mSizeSmall;
     private AssetSize mSizeLarge;
@@ -32,9 +31,13 @@ public class Asset
             asset.setSizeLarge(AssetSize.buildFromJson(jsonAsset.getJSONObject("large")));
             asset.setSizeFull(AssetSize.buildFromJson(jsonAsset.getJSONObject("full")));
 
+            if (jsonAsset.has("native"))
+            {
+                JSONObject nativeType = jsonAsset.getJSONObject("native");
+                asset.setNativeType(AssetNativeType.buildFromJson(nativeType));
+            }
+
         } catch(JSONException e) {
-            e.printStackTrace();
-        } catch(ParseException e) {
             e.printStackTrace();
         }
 
@@ -49,7 +52,7 @@ public class Asset
 
     public void setTitle(String title)
     {
-        mTitle = title;
+        this.mTitle = title;
     }
 
 
@@ -60,7 +63,7 @@ public class Asset
 
     public void setCaption(String caption)
     {
-        mCaption = caption;
+        this.mCaption = caption;
     }
 
 
@@ -72,7 +75,7 @@ public class Asset
 
     public void setCredit(String credit)
     {
-        mCredit = credit;
+        this.mCredit = credit;
     }
 
 
@@ -83,7 +86,7 @@ public class Asset
 
     public void setSizeThumbnail(AssetSize assetSize)
     {
-        mSizeThumbnail = assetSize;
+        this.mSizeThumbnail = assetSize;
     }
 
 
@@ -105,7 +108,7 @@ public class Asset
 
     public void setSizeLarge(AssetSize assetSize)
     {
-        mSizeLarge = assetSize;
+        this.mSizeLarge = assetSize;
     }
 
 
@@ -116,7 +119,18 @@ public class Asset
 
     public void setSizeFull(AssetSize assetSize)
     {
-        mSizeFull = assetSize;
+        this.mSizeFull = assetSize;
+    }
+
+
+    public AssetNativeType getNativeType()
+    {
+        return mNativeType;
+    }
+
+    public void setNativeType(AssetNativeType nativeType)
+    {
+        this.mNativeType = nativeType;
     }
 
 }

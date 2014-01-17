@@ -6,12 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Article
+public class Article extends Entity
 {
 
     private final static String TAG = "Article";
@@ -28,7 +26,7 @@ public class Article
     private Spanned mParsedBody;
     private ArrayList<Asset> mAssets = new ArrayList<Asset>();
     private ArrayList<Audio> mAudio = new ArrayList<Audio>();
-
+    private ArrayList<Attribution> mAttributions = new ArrayList<Attribution>();
 
     // Build an Article from a JSON response.
     // https://github.com/SCPR/api-docs/blob/master/KPCC/v2/endpoints/articles.md
@@ -45,32 +43,25 @@ public class Article
             article.setByline(jsonArticle.getString("byline"));
             article.setTeaser(jsonArticle.getString("teaser"));
             article.setBody(jsonArticle.getString("body"));
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            Date timestamp = sdf.parse(jsonArticle.getString("published_at"));
-            article.setTimestamp(timestamp);
+            article.setTimestamp(parseISODate(jsonArticle.getString("published_at")));
 
             if (jsonArticle.has("category"))
-            {
-                JSONObject category = jsonArticle.getJSONObject("category");
-                article.setCategory(Category.buildFromJson(category));
-            }
+            { article.setCategory(Category.buildFromJson(jsonArticle.getJSONObject("category"))); }
 
             JSONArray assets = jsonArticle.getJSONArray("assets");
             for (int i=0; i < assets.length(); i++)
-            {
-                article.addAsset(Asset.buildFromJson(assets.getJSONObject(i)));
-            }
+            { article.addAsset(Asset.buildFromJson(assets.getJSONObject(i))); }
 
             JSONArray audio = jsonArticle.getJSONArray("audio");
             for (int i=0; i < audio.length(); i++)
-            {
-                article.addAudio(Audio.buildFromJson(audio.getJSONObject(i)));
-            }
+            { article.addAudio(Audio.buildFromJson(audio.getJSONObject(i))); }
+
+            JSONArray attributions = jsonArticle.getJSONArray("attributions");
+            for (int i=0; i < attributions.length(); i++)
+            { article.addAttribution(Attribution.buildFromJson(attributions.getJSONObject(i))); }
 
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+            // TODO: Handle error
             e.printStackTrace();
         }
 
@@ -92,7 +83,7 @@ public class Article
 
     public void setId(String id)
     {
-        mId = id;
+        this.mId = id;
     }
 
 
@@ -103,7 +94,7 @@ public class Article
 
     public void setTitle(String title)
     {
-        mTitle = title;
+        this.mTitle = title;
     }
 
 
@@ -114,7 +105,7 @@ public class Article
 
     public void setShortTitle(String shortTitle)
     {
-        mShortTitle = shortTitle;
+        this.mShortTitle = shortTitle;
     }
 
 
@@ -125,7 +116,7 @@ public class Article
 
     public void setPublicUrl(String publicUrl)
     {
-        mPublicUrl = publicUrl;
+        this.mPublicUrl = publicUrl;
     }
 
 
@@ -136,7 +127,7 @@ public class Article
 
     public void setCategory(Category category)
     {
-        mCategory = category;
+        this.mCategory = category;
     }
 
 
@@ -147,7 +138,7 @@ public class Article
 
     public void setByline(String byline)
     {
-        mByline = byline;
+        this.mByline = byline;
     }
 
 
@@ -158,7 +149,7 @@ public class Article
 
     public void setTimestamp(Date timestamp)
     {
-        mTimestamp = timestamp;
+        this.mTimestamp = timestamp;
     }
 
 
@@ -169,7 +160,7 @@ public class Article
 
     public void setTeaser(String teaser)
     {
-        mTeaser = teaser;
+        this.mTeaser = teaser;
     }
 
 
@@ -180,7 +171,7 @@ public class Article
 
     public void setBody(String body)
     {
-        mBody = body;
+        this.mBody = body;
     }
 
 
@@ -191,7 +182,7 @@ public class Article
 
     public void setParsedBody(Spanned parsedBody)
     {
-        mParsedBody = parsedBody;
+        this.mParsedBody = parsedBody;
     }
 
 
@@ -202,7 +193,7 @@ public class Article
 
     public void setAssets(ArrayList<Asset> assets)
     {
-        mAssets = assets;
+        this.mAssets = assets;
     }
 
     public void addAsset(Asset asset)
@@ -223,7 +214,7 @@ public class Article
 
     public void setAudio(ArrayList<Audio> audio)
     {
-        mAudio = audio;
+        this.mAudio = audio;
     }
 
     public void addAudio(Audio audio)
@@ -234,6 +225,27 @@ public class Article
     public boolean hasAudio()
     {
         return mAudio.size() > 0;
+    }
+
+
+    public ArrayList<Attribution> getAttributions()
+    {
+        return mAttributions;
+    }
+
+    public void setAttributions(ArrayList<Attribution> attributions)
+    {
+        this.mAttributions = attributions;
+    }
+
+    public void addAttribution(Attribution attribution)
+    {
+        mAttributions.add(attribution);
+    }
+
+    public boolean hasAttributions()
+    {
+        return mAttributions.size() > 0;
     }
 
 }

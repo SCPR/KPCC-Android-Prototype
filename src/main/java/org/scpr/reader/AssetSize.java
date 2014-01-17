@@ -1,11 +1,9 @@
 package org.scpr.reader;
 
-import android.net.ParseException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AssetSize
+public class AssetSize extends Entity
 {
 
     private final static String TAG = "org.scpr.reader.DEBUG.AssetSize";
@@ -27,8 +25,6 @@ public class AssetSize
 
         } catch(JSONException e) {
             e.printStackTrace();
-        } catch(ParseException e) {
-            e.printStackTrace();
         }
 
         return assetSize;
@@ -42,7 +38,7 @@ public class AssetSize
 
     public void setUrl(String url)
     {
-        mUrl = url;
+        this.mUrl = url;
     }
 
 
@@ -53,7 +49,7 @@ public class AssetSize
 
     public void setWidth(int width)
     {
-        mWidth = width;
+        this.mWidth = width;
     }
 
 
@@ -64,7 +60,7 @@ public class AssetSize
 
     public void setHeight(int height)
     {
-        mHeight = height;
+        this.mHeight = height;
     }
 
 }

@@ -3,13 +3,14 @@ package org.scpr.reader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Category
+public class Category extends Entity
 {
 
     private int mId;
     private String mSlug;
     private String mTitle;
     private String mPublicUrl;
+
 
     public static Category buildFromJson(JSONObject jsonCategory)
     {
@@ -23,6 +24,8 @@ public class Category
             category.setPublicUrl(jsonCategory.getString("public_url"));
 
         } catch (JSONException e) {
+            // TODO: Handle exception
+            e.printStackTrace();
         }
 
         return category;
@@ -36,7 +39,7 @@ public class Category
 
     public void setId(int id)
     {
-        mId = id;
+        this.mId = id;
     }
 
 
@@ -47,7 +50,7 @@ public class Category
 
     public void setSlug(String slug)
     {
-        mSlug = slug;
+        this.mSlug = slug;
     }
 
 
@@ -58,7 +61,7 @@ public class Category
 
     public void setTitle(String title)
     {
-        mTitle = title;
+        this.mTitle = title;
     }
 
 
@@ -69,7 +72,7 @@ public class Category
 
     public void setPublicUrl(String publicUrl)
     {
-        mPublicUrl = publicUrl;
+        this.mPublicUrl = publicUrl;
     }
 
 }
