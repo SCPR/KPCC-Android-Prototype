@@ -6,7 +6,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +47,10 @@ public abstract class DrawerActivity extends FragmentActivity
         // filled with NavMenuSection and NavMenuItem objects.
         mMenuItems = new NavDrawerItem[]
         {
+            NavMenuSection.create(300, "KPCC Reader"),
+            NavMenuItem.create(301, "Live Stream", "ic_action_next_item", this),
+            NavMenuItem.create(302, "All Articles", "ic_action_next_item", this),
+
             NavMenuSection.create(100, "Categories"),
             NavMenuItem.create(101, "Politics", "ic_action_next_item", this),
             NavMenuItem.create(102, "Education", "ic_action_next_item", this),
@@ -106,6 +109,19 @@ public abstract class DrawerActivity extends FragmentActivity
 
         switch (id)
         {
+            // Live Stream
+            case 301:
+                getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, LiveStreamFragment.newInstance())
+                    .commit();
+
+                break;
+
+            // All Articles
+            case 302:
+                buildListFragment(null);
+                break;
+
             // Politics
             case 101:
                 params.put("categories", "politics");
