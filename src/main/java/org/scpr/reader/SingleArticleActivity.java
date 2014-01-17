@@ -150,8 +150,11 @@ public class SingleArticleActivity extends FragmentActivity
             }
 
             // Update the ArticleCollection articles.
-            for (Article article : collection) mArticles.add(article);
-            mViewPager.getAdapter().notifyDataSetChanged();
+            for (Article article : collection)
+            {
+                mArticles.add(article);
+                mViewPager.getAdapter().notifyDataSetChanged();
+            }
 
             // TODO: Find a better place to increase the page number.
             mLastPage += 1;
