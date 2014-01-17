@@ -207,7 +207,7 @@ public class ArticleListFragment extends Fragment
                 for (int i = 0; i < articles.length(); i++)
                 {
                     Article article = Article.buildFromJson(articles.getJSONObject(i));
-                    if (article.hasAudio()) collection.add(article);
+                    collection.add(article);
                 }
             } catch (JSONException e) {
                 // TODO: Handle this error more nicely.
