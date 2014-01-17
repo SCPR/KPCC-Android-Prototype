@@ -10,6 +10,10 @@ import java.util.Date;
 public class Episode extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("episodes");
+
+
     private String mTitle;
     private String mSummary;
     private Date mAirDate;

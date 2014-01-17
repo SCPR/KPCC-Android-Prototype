@@ -10,6 +10,8 @@ import java.util.Date;
 public class Event extends Entity
 {
 
+    public final static BaseApiClient Client = new BaseApiClient("events");
+
     private int mId;
     private String mTitle;
     private String mPublicUrl;

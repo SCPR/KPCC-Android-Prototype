@@ -10,6 +10,10 @@ import java.util.Date;
 public class Alert extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("alerts");
+
+
     private int mId;
     private String mHeadline;
     private String mType;

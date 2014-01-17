@@ -14,6 +14,10 @@ public class Article extends Entity
 
     private final static String TAG = "Article";
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("articles");
+
+
     private String mId;
     private String mTitle;
     private String mShortTitle;

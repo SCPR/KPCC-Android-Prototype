@@ -9,6 +9,10 @@ import java.util.Date;
 public class ScheduleOccurrence extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("schedule");
+
+
     private String mTitle;
     private String mUrl;
     private Date mStartDate;

@@ -10,6 +10,10 @@ import java.util.Date;
 public class Edition extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("editions");
+
+
     private int mId;
     private String mTitle;
     private Date mPublishedAt;

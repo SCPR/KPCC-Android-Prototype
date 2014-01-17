@@ -7,6 +7,11 @@ import java.util.Date;
 
 public class Audio extends Entity
 {
+
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("audio");
+
+
     private int mId;
     private String mDescription;
     private String mUrl;

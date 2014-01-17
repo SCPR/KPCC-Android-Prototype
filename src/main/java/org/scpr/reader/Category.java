@@ -6,6 +6,10 @@ import org.json.JSONObject;
 public class Category extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("categories");
+
+
     private int mId;
     private String mSlug;
     private String mTitle;

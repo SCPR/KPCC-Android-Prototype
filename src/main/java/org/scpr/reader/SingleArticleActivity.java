@@ -111,7 +111,7 @@ public class SingleArticleActivity extends FragmentActivity
         setIsLoading(true);
 
         mParams.merge(params);
-        ArticleClient.getCollection(mParams.toParams(), new ArticleJsonResponseHandler());
+        Article.Client.getCollection(mParams.toParams(), new ArticleJsonResponseHandler());
     }
 
 

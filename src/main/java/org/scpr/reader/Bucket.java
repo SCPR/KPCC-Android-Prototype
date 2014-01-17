@@ -11,6 +11,10 @@ import java.util.Date;
 public class Bucket extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("buckets");
+
+
     private String mTitle;
     private String mId;
     private Date mUpdatedAt;

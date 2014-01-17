@@ -7,6 +7,10 @@ import org.json.JSONObject;
 public class Program extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("programs");
+
+
     private String mTitle;
     private String mId;
     private String mHost;

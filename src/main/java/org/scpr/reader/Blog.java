@@ -6,6 +6,10 @@ import org.json.JSONObject;
 public class Blog extends Entity
 {
 
+    // API Client
+    public final static BaseApiClient Client = new BaseApiClient("blogs");
+
+
     private String mTitle;
     private String mId;
     private String mTagline;

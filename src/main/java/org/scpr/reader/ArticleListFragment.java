@@ -149,7 +149,7 @@ public class ArticleListFragment extends Fragment
         setIsLoading(true);
 
         mParams.merge(params);
-        ArticleClient.getCollection(mParams.toParams(), new ArticleJsonResponseHandler(replace));
+        Article.Client.getCollection(mParams.toParams(), new ArticleJsonResponseHandler(replace));
     }
 
 
