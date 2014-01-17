@@ -33,7 +33,7 @@ public class ArticleListFragment extends Fragment
     private final static String TAG = "org.scpr.reader.DEBUG.ArticleListFragment";
     private final static int LOAD_THRESHOLD = 0;
     private final static String QUERY_DEFAULT_TYPES = "news,blogs,segments";
-    private final static String QUERY_DEFAULT_LIMIT = "20";
+    private final static String QUERY_DEFAULT_LIMIT = "40";
     private final static String QUERY_DEFAULT_PAGE = "1";
 
     private ArticleCollection mArticles;
@@ -207,7 +207,8 @@ public class ArticleListFragment extends Fragment
                 for (int i = 0; i < articles.length(); i++)
                 {
                     Article article = Article.buildFromJson(articles.getJSONObject(i));
-                    collection.add(article);
+                    // DEBUG
+                    if (article.hasAudio()) collection.add(article);
                 }
             } catch (JSONException e) {
                 // TODO: Handle this error more nicely.

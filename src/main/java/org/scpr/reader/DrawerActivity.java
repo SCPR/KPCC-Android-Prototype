@@ -34,8 +34,6 @@ public abstract class DrawerActivity extends FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "Got onCreate");
-
         super.onCreate(savedInstanceState);
         setContentView(getMainLayoutId());
 

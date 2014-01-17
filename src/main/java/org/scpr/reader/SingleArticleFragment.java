@@ -5,11 +5,11 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +18,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,7 +37,7 @@ public class SingleArticleFragment extends Fragment
     public static final String EXTRA_QUERY_PARAMS = "org.scpr.reader.query_params";
 
     private Article mArticle;
-    private ScrollView mScrollView;
+    private LinearLayout mArticleLayout;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
@@ -62,7 +62,9 @@ public class SingleArticleFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        Log.d(TAG, "in onCreate()");
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
 
         String articleId = getArguments().getString(EXTRA_ARTICLE_ID);
@@ -74,6 +76,8 @@ public class SingleArticleFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
+        Log.d(TAG, "in onCreateView()");
+
         View v = inflater.inflate(R.layout.fragment_article, parent, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -86,7 +90,7 @@ public class SingleArticleFragment extends Fragment
 
         mProgress = (ProgressBar)v.findViewById(R.id.article_body_progress);
 
-        mScrollView = (ScrollView) v.findViewById(R.id.single_article);
+        mArticleLayout = (LinearLayout) v.findViewById(R.id.single_article);
         mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
         mBody       = (TextView) v.findViewById(R.id.article_body_textView);
         mTimestamp  = (TextView) v.findViewById(R.id.article_timestamp_textView);
@@ -132,7 +136,20 @@ public class SingleArticleFragment extends Fragment
         if (mArticle.hasAudio())
         {
             mAudioPlayer = new MediaPlayer();
-            mAudioController = new MediaController(getActivity());
+            mAudioController = new MediaController(getActivity())
+            {
+                @Override
+                public void hide()
+                {
+                    super.hide();
+                }
+
+                @Override
+                public boolean onTouchEvent(MotionEvent event)
+                {
+                    return super.onTouchEvent(event);
+                }
+            };
 
             mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
@@ -208,18 +225,13 @@ public class SingleArticleFragment extends Fragment
                         }
                     });
 
-                    mAudioController.setAnchorView(mScrollView);
+                    mAudioController.setAnchorView(mBody);
 
-                    Handler handler = new Handler();
-                    handler.post(new Runnable()
+                    if (getUserVisibleHint())
                     {
-                        public void run()
-                        {
-                            mAudioController.setEnabled(true);
-                            mAudioController.show(0);
-                        }
-                    });
-                }
+                        enableAudioPlayer();
+                    }
+                } // onPrepared
             });
 
             try
@@ -230,41 +242,83 @@ public class SingleArticleFragment extends Fragment
                 // TODO: Handle error
                 e.printStackTrace();
             }
-
-            mScrollView.setOnTouchListener(new View.OnTouchListener()
-            {
-                @Override
-                public boolean onTouch(View v, MotionEvent event)
-                {
-                    mAudioController.show();
-                    return false;
-                }
-            });
         }
 
         return v;
     }
 
 
+    private void enableAudioPlayer()
+    {
+        Log.d(TAG, "in enableAudioPlayer()");
+
+        if (!mAudioController.isShowing())
+        {
+            Log.d(TAG, "Enabling and showing audio controller.");
+            Log.d(TAG, String.valueOf(this));
+            mAudioController.setEnabled(true);
+            mAudioController.show(0);
+        }
+    }
+
+
+    private void disableAudioPlayer()
+    {
+        Log.d(TAG, "in disableAudioPlayer()");
+        mAudioPlayer.pause();
+
+        if (mAudioController.isShowing())
+        {
+            Log.d(TAG, "disabling and hiding audio controller.");
+            mAudioController.setEnabled(false);
+            mAudioController.hide();
+        }
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        Log.d(TAG, "in setUserVisibleHint()");
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (mAudioController != null)
+        {
+            if (isVisibleToUser)
+            {
+                enableAudioPlayer();
+            } else {
+                disableAudioPlayer();
+            }
+        }
+    }
+
+
     @Override
     public void onPause()
     {
+        Log.d(TAG, "in onPause()");
         super.onPause();
+    }
 
-        if (mAudioPlayer != null)
-        {
-            mAudioPlayer.pause();
-        }
+
+    @Override
+    public void onResume()
+    {
+        Log.d(TAG, "in onResume()");
+        super.onResume();
     }
 
 
     @Override
     public void onDestroy()
     {
+        Log.d(TAG, "in onDestroy()");
         super.onDestroy();
 
         if (mAudioPlayer != null)
         {
+            Log.d(TAG, "releasing audio player");
             mAudioPlayer.release();
             mAudioPlayer = null;
         }
