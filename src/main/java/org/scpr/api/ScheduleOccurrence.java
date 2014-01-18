@@ -1,4 +1,4 @@
-package org.scpr.reader;
+package org.scpr.api;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -113,7 +113,7 @@ public class ScheduleOccurrence extends Entity
     }
 
 
-    protected static class ApiClient extends BaseApiClient
+    public static class ApiClient extends BaseApiClient
     {
         public ApiClient(String endpoint) { super(endpoint); }
 

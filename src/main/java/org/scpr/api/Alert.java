@@ -1,4 +1,4 @@
-package org.scpr.reader;
+package org.scpr.api;
 
 
 import org.json.JSONException;

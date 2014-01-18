@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.scpr.api.Article;
+
 public class HtmlParser extends AsyncTask<String, Integer, Spanned>
 {
 

@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.scpr.api.Article;
+
 import java.io.IOException;
 
 

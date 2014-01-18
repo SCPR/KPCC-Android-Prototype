@@ -14,6 +14,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
+import org.scpr.api.ScheduleOccurrence;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package org.scpr.reader;
+package org.scpr.api;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

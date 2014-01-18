@@ -21,6 +21,7 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.scpr.api.Article;
 
 import java.util.ArrayList;
 

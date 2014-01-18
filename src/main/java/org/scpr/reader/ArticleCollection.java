@@ -2,6 +2,8 @@ package org.scpr.reader;
 
 import android.content.Context;
 
+import org.scpr.api.Article;
+
 import java.util.ArrayList;
 
 
