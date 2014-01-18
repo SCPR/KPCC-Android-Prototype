@@ -1,5 +1,7 @@
 package org.scpr.reader;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +12,7 @@ public class ScheduleOccurrence extends Entity
 {
 
     // API Client
-    public final static BaseApiClient Client = new BaseApiClient("schedule");
+    public final static ApiClient Client = new ApiClient("schedule");
 
 
     private String mTitle;
@@ -21,7 +23,7 @@ public class ScheduleOccurrence extends Entity
     private Program mProgram;
 
 
-    private static ScheduleOccurrence buildFromJson(JSONObject jsonSchedule)
+    public static ScheduleOccurrence buildFromJson(JSONObject jsonSchedule)
     {
         ScheduleOccurrence schedule = new ScheduleOccurrence();
 
@@ -110,4 +112,14 @@ public class ScheduleOccurrence extends Entity
         mProgram = program;
     }
 
+
+    protected static class ApiClient extends BaseApiClient
+    {
+        public ApiClient(String endpoint) { super(endpoint); }
+
+        public void getCurrent(AsyncHttpResponseHandler handler)
+        {
+            get("current", null, handler);
+        }
+    }
 }
