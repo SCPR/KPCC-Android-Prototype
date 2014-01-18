@@ -133,7 +133,7 @@ public class SingleArticleFragment extends Fragment
             ImageLoader.getInstance().displayImage(url, mAsset);
         }
 
-        if (mArticle.hasAudio())
+        if (mArticle.hasAudio() && mAudioPlayer == null && mAudioController == null)
         {
             mAudioPlayer = new MediaPlayer();
             mAudioController = new MediaController(getActivity())
