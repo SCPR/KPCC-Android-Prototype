@@ -2,6 +2,7 @@ package org.scpr.reader;
 
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -238,6 +239,7 @@ public class SingleArticleFragment extends Fragment
 
             try
             {
+                mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mAudioPlayer.setDataSource(mArticle.getAudio().get(0).getUrl());
                 mAudioPlayer.prepareAsync();
             } catch(IOException e) {
