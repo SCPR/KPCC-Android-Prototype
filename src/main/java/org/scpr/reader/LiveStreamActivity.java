@@ -3,9 +3,7 @@ package org.scpr.reader;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
-/**
- * Created by bricker on 1/16/14.
- */
+
 public class LiveStreamActivity extends DrawerActivity
 {
 

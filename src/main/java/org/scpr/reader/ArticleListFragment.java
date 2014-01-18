@@ -247,7 +247,7 @@ public class ArticleListFragment extends Fragment
 
         @Override
         public void onFailure(
-            int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
+        int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse)
         {
             // TODO: Handle errors mo' betta
             setIsLoading(false);

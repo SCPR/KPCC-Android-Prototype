@@ -10,9 +10,7 @@ import android.widget.MediaController;
 
 import java.io.IOException;
 
-/**
- * Created by bricker on 1/16/14.
- */
+
 public class LiveStreamFragment extends Fragment
 {
 

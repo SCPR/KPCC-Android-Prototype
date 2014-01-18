@@ -17,7 +17,7 @@ import com.loopj.android.http.RequestParams;
 //   public class Event {
 //     public static EventApiClient Client = new EventApiClient("events");
 //
-//     private class EventApiClient extends BaseApiClient {
+//     protected class EventApiClient extends BaseApiClient {
 //       public EventApiClient(String endpoint) { super(endpoint) }
 //       public void getCurrentEvent() { ... }
 //     }
