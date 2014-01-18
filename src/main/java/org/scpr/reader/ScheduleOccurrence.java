@@ -122,4 +122,5 @@ public class ScheduleOccurrence extends Entity
             get("current", null, handler);
         }
     }
+
 }
