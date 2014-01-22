@@ -1,0 +1,16 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/audio_player"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@android:color/white"
+    android:layout_gravity="bottom"
+    android:layout_weight="0">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Audio buttons"
+        android:gravity="center_horizontal" />
+
+</RelativeLayout>

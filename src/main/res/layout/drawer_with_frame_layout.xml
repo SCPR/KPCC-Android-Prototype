@@ -7,9 +7,19 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/fragment_audio_player" />
+
+    </FrameLayout>
+
 
     <include layout="@layout/drawer_list" />
 
