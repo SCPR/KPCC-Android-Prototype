@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class SingleArticleViewPager extends Fragment
 {
 
-    private final static String TAG = "org.scpr.reader.DEBUG.SingleArticleActivity";
+    private final static String TAG = "org.scpr.reader.DEBUG.SingleArticleViewPager";
     public final static String EXTRA_ARTICLE_ID = "org.scpr.reader.article_id";
     public final static String EXTRA_REQUEST_PARAMS = "org.scpr.reader.request_params";
     public final static String EXTRA_LAST_PAGE = "org.scpr.reader.last_page";
