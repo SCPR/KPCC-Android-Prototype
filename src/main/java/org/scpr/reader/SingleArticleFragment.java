@@ -89,8 +89,9 @@ public class SingleArticleFragment extends Fragment
             }
         }
 
+        mAudioBar = (RelativeLayout) getActivity().findViewById(R.id.audio_player);
+
         mProgress = (ProgressBar) v.findViewById(R.id.article_body_progress);
-        mAudioBar = (RelativeLayout) v.findViewById(R.layout.fragment_audio_player);
         mArticleLayout = (LinearLayout) v.findViewById(R.id.single_article);
         mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
         mBody       = (TextView) v.findViewById(R.id.article_body_textView);
@@ -144,7 +145,7 @@ public class SingleArticleFragment extends Fragment
                 public void onPrepared(MediaPlayer mp)
                 {
                     TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
-                    title.setText(mArticle.getAudio().get(0).getDescription());
+                    title.setText("Audio: " + mArticle.getAudio().get(0).getDescription());
                 } // onPrepared
             });
 
