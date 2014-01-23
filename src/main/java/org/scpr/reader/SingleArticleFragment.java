@@ -15,13 +15,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -41,6 +41,7 @@ public class SingleArticleFragment extends Fragment
 
     private Article mArticle;
     private LinearLayout mArticleLayout;
+    private RelativeLayout mAudioBar;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
@@ -78,8 +79,6 @@ public class SingleArticleFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        Log.d(TAG, "in onCreateView()");
-
         View v = inflater.inflate(R.layout.fragment_article, parent, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -90,8 +89,8 @@ public class SingleArticleFragment extends Fragment
             }
         }
 
-        mProgress = (ProgressBar)v.findViewById(R.id.article_body_progress);
-
+        mProgress = (ProgressBar) v.findViewById(R.id.article_body_progress);
+        mAudioBar = (RelativeLayout) v.findViewById(R.layout.fragment_audio_player);
         mArticleLayout = (LinearLayout) v.findViewById(R.id.single_article);
         mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
         mBody       = (TextView) v.findViewById(R.id.article_body_textView);
@@ -135,104 +134,17 @@ public class SingleArticleFragment extends Fragment
             ImageLoader.getInstance().displayImage(url, mAsset);
         }
 
-        if (mArticle.hasAudio() && mAudioPlayer == null && mAudioController == null)
+        if (mArticle.hasAudio() && mAudioPlayer == null)
         {
             mAudioPlayer = new MediaPlayer();
-            mAudioController = new MediaController(getActivity())
-            {
-                @Override
-                public void hide()
-                {
-                    super.hide();
-                }
-
-                @Override
-                public boolean onTouchEvent(MotionEvent event)
-                {
-                    return super.onTouchEvent(event);
-                }
-            };
 
             mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
             {
                 @Override
                 public void onPrepared(MediaPlayer mp)
                 {
-                    mAudioController.setMediaPlayer(new MediaController.MediaPlayerControl()
-                    {
-                        @Override
-                        public void start()
-                        {
-                            mAudioPlayer.start();
-                        }
-
-                        @Override
-                        public void pause()
-                        {
-                            mAudioPlayer.pause();
-                        }
-
-                        @Override
-                        public int getDuration()
-                        {
-                            return mAudioPlayer.getDuration();
-                        }
-
-                        @Override
-                        public int getCurrentPosition()
-                        {
-                            return mAudioPlayer.getCurrentPosition();
-                        }
-
-                        @Override
-                        public void seekTo(int pos)
-                        {
-                            mAudioPlayer.seekTo(pos);
-                        }
-
-                        @Override
-                        public boolean isPlaying()
-                        {
-                            return mAudioPlayer.isPlaying();
-                        }
-
-                        @Override
-                        public int getBufferPercentage()
-                        {
-                            return 0;
-                        }
-
-                        @Override
-                        public boolean canPause()
-                        {
-                            return true;
-                        }
-
-                        @Override
-                        public boolean canSeekBackward()
-                        {
-                            return true;
-                        }
-
-                        @Override
-                        public boolean canSeekForward()
-                        {
-                            return true;
-                        }
-
-                        @Override
-                        public int getAudioSessionId()
-                        {
-                            return mAudioPlayer.getAudioSessionId();
-                        }
-                    });
-
-                    mAudioController.setAnchorView(mBody);
-
-                    if (getUserVisibleHint())
-                    {
-                        enableAudioPlayer();
-                    }
+                    TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
+                    title.setText(mArticle.getAudio().get(0).getDescription());
                 } // onPrepared
             });
 
@@ -251,72 +163,10 @@ public class SingleArticleFragment extends Fragment
     }
 
 
-    private void enableAudioPlayer()
-    {
-        Log.d(TAG, "in enableAudioPlayer()");
-
-        if (!mAudioController.isShowing())
-        {
-            Log.d(TAG, "Enabling and showing audio controller.");
-            Log.d(TAG, String.valueOf(this));
-            mAudioController.setEnabled(true);
-            mAudioController.show(0);
-        }
-    }
-
-
-    private void disableAudioPlayer()
-    {
-        Log.d(TAG, "in disableAudioPlayer()");
-        mAudioPlayer.pause();
-
-        if (mAudioController.isShowing())
-        {
-            Log.d(TAG, "disabling and hiding audio controller.");
-            mAudioController.setEnabled(false);
-            mAudioController.hide();
-        }
-    }
-
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        Log.d(TAG, "in setUserVisibleHint()");
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (mAudioController != null)
-        {
-            if (isVisibleToUser)
-            {
-                enableAudioPlayer();
-            } else {
-                disableAudioPlayer();
-            }
-        }
-    }
-
-
-    @Override
-    public void onPause()
-    {
-        Log.d(TAG, "in onPause()");
-        super.onPause();
-    }
-
-
-    @Override
-    public void onResume()
-    {
-        Log.d(TAG, "in onResume()");
-        super.onResume();
-    }
-
 
     @Override
     public void onDestroy()
     {
-        Log.d(TAG, "in onDestroy()");
         super.onDestroy();
 
         if (mAudioPlayer != null)
