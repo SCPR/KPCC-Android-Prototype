@@ -9,6 +9,25 @@ import android.view.ViewGroup;
 public class AudioPlayerFragment extends Fragment
 {
 
+    public static String EXTRA_TITLE = "org.scpr.reader.AudioPlayerFragment.EXTRA_TITLE";
+    public static String EXTRA_URL = "org.scpr.reader.AudioPlayerFragment.EXTRA_URL";
+
+    private String mTitle;
+    private String mUrl;
+
+
+    public AudioPlayerFragment newInstance(String title, String url)
+    {
+        Bundle args = new Bundle();
+        args.putString(EXTRA_TITLE, title);
+        args.putString(EXTRA_URL, url);
+
+        AudioPlayerFragment fragment = new AudioPlayerFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,5 @@
 package org.scpr.reader;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -107,13 +106,13 @@ public class ArticleListFragment extends Fragment
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Article a = ((ArticleAdapter) mGridView.getAdapter()).getItem(position);
-                Intent i = new Intent(getActivity(), SingleArticleActivity.class);
 
-                i.putExtra(SingleArticleFragment.EXTRA_ARTICLE_ID, a.getId());
-                i.putExtra(EXTRA_REQUEST_PARAMS, mParams.toHashMap());
-                i.putExtra(EXTRA_LAST_PAGE, mLastPage);
+                SingleArticleViewPager fragment =
+                    SingleArticleViewPager.newInstance(a.getId(), mParams.toHashMap(), mLastPage);
 
-                startActivity(i);
+                getFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
             }
         });
 

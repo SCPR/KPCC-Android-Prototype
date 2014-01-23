@@ -67,7 +67,6 @@ public class SingleArticleFragment extends Fragment
     {
         Log.d(TAG, "in onCreate()");
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
         setHasOptionsMenu(true);
 
         String articleId = getArguments().getString(EXTRA_ARTICLE_ID);

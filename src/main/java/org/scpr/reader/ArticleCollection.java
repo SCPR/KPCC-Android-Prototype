@@ -77,4 +77,23 @@ public class ArticleCollection
         return mArticles.size();
     }
 
+    public Article find(String articleId)
+    {
+        return mArticles.get(findPosition(articleId));
+    }
+
+
+    public int findPosition(String articleId)
+    {
+        int i;
+        Article article;
+
+        for (i=0; i < size(); i++)
+        {
+            article = mArticles.get(i);
+            if (article.getId().equals(articleId)) break;
+        }
+
+        return i;
+    }
 }
