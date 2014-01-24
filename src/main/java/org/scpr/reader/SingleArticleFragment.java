@@ -165,6 +165,34 @@ public class SingleArticleFragment extends Fragment
 
 
 
+    private void enableAudioPlayer()
+    {
+    }
+
+
+    private void disableAudioPlayer()
+    {
+        mAudioPlayer.pause();
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser)
+    {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (mAudioPlayer != null)
+        {
+            if (isVisibleToUser)
+            {
+                enableAudioPlayer();
+            } else {
+                disableAudioPlayer();
+            }
+        }
+    }
+
+
     @Override
     public void onDestroy()
     {
