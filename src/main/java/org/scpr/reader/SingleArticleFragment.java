@@ -145,7 +145,7 @@ public class SingleArticleFragment extends Fragment
                 public void onPrepared(MediaPlayer mp)
                 {
                     TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
-                    title.setText("Audio: " + mArticle.getAudio().get(0).getDescription());
+                    title.setText(mArticle.getTitle());
                 } // onPrepared
             });
 
