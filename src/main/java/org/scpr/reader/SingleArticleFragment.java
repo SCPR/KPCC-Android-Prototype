@@ -42,6 +42,7 @@ public class SingleArticleFragment extends Fragment
     private Article mArticle;
     private LinearLayout mArticleLayout;
     private RelativeLayout mAudioBar;
+    private boolean mAudioPrepared = false;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
@@ -144,8 +145,7 @@ public class SingleArticleFragment extends Fragment
                 @Override
                 public void onPrepared(MediaPlayer mp)
                 {
-                    TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
-                    title.setText(mArticle.getTitle());
+                    mAudioPrepared = true;
                 } // onPrepared
             });
 
@@ -167,6 +167,11 @@ public class SingleArticleFragment extends Fragment
 
     private void enableAudioPlayer()
     {
+        if (mAudioPrepared)
+        {
+            TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
+            title.setText(mArticle.getTitle());
+        }
     }
 
 
