@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
@@ -13,12 +14,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
-// Abstract Activity which implements the Drawer functionality.
-// All activities which have the drawer should extend this activity.
-public abstract class DrawerActivity extends FragmentActivity
+public abstract class MainActivity extends FragmentActivity
 {
 
-    private final static String TAG = "org.scpr.reader.DEBUG.DrawerActivity";
+    private final static String TAG = "org.scpr.reader.DEBUG.MainActivity";
 
     protected abstract int getMainLayoutId();
 
@@ -28,6 +27,7 @@ public abstract class DrawerActivity extends FragmentActivity
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private NavDrawerItem[] mMenuItems;
+    private AudioPlayerFragment mAudioPlayerFragment;
 
 
     @Override
@@ -38,6 +38,13 @@ public abstract class DrawerActivity extends FragmentActivity
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.drawer_menu);
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction()
+            .add(R.layout.fragment_audio_player, new AudioPlayerFragment())
+            .commit();
+
+        mAudioPlayerFragment = (AudioPlayerFragment) fm.findFragmentById(R.layout.fragment_audio_player);
 
         mTitle = getTitle();
         mDrawerTitle = getTitle();

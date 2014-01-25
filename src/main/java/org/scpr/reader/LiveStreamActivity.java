@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 
-public class LiveStreamActivity extends DrawerActivity
+public class LiveStreamActivity extends MainActivity
 {
 
     @Override

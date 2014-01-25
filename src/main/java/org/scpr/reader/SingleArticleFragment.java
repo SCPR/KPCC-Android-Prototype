@@ -2,33 +2,28 @@ package org.scpr.reader;
 
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.scpr.api.Article;
-
-import java.io.IOException;
 
 
 public class SingleArticleFragment extends Fragment
@@ -40,17 +35,15 @@ public class SingleArticleFragment extends Fragment
     public static final String EXTRA_QUERY_PARAMS = "org.scpr.reader.query_params";
 
     private Article mArticle;
+    private ImageButton mAudioPlayButton;
     private LinearLayout mArticleLayout;
-    private RelativeLayout mAudioBar;
-    private boolean mAudioPrepared = false;
+    private AudioPlayerFragment mAudioBar;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
     private TextView mTimestamp;
     private TextView mByline;
     private ImageView mAsset;
-    private MediaPlayer mAudioPlayer;
-    private MediaController mAudioController;
 
 
     public static SingleArticleFragment newInstance(String articleId)
@@ -67,12 +60,14 @@ public class SingleArticleFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        Log.d(TAG, "in onCreate()");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
         String articleId = getArguments().getString(EXTRA_ARTICLE_ID);
         mArticle = ArticleCollection.get(getActivity()).getArticle(articleId);
+
+        FragmentManager fm = getFragmentManager();
+        mAudioBar = (AudioPlayerFragment) fm.findFragmentById(R.layout.fragment_audio_player);
     }
 
 
@@ -90,8 +85,7 @@ public class SingleArticleFragment extends Fragment
             }
         }
 
-        mAudioBar = (RelativeLayout) getActivity().findViewById(R.id.audio_player);
-
+        mAudioPlayButton = (ImageButton) v.findViewById(R.id.audio_btn_play);
         mProgress = (ProgressBar) v.findViewById(R.id.article_body_progress);
         mArticleLayout = (LinearLayout) v.findViewById(R.id.single_article);
         mTitle      = (TextView) v.findViewById(R.id.article_title_textView);
@@ -136,80 +130,20 @@ public class SingleArticleFragment extends Fragment
             ImageLoader.getInstance().displayImage(url, mAsset);
         }
 
-        if (mArticle.hasAudio() && mAudioPlayer == null)
+        if (mArticle.hasAudio())
         {
-            mAudioPlayer = new MediaPlayer();
-
-            mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
-            {
+            mAudioPlayButton.setVisibility(View.VISIBLE);
+            mAudioPlayButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onPrepared(MediaPlayer mp)
-                {
-                    mAudioPrepared = true;
-                } // onPrepared
+                public void onClick(View v) {
+                    mAudioBar.setAudio(mArticle, mArticle.getAudio().get(0));
+                }
             });
-
-            try
-            {
-                mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mAudioPlayer.setDataSource(mArticle.getAudio().get(0).getUrl());
-                mAudioPlayer.prepareAsync();
-            } catch(IOException e) {
-                // TODO: Handle error
-                e.printStackTrace();
-            }
         }
 
         return v;
     }
 
-
-
-    private void enableAudioPlayer()
-    {
-        if (mAudioPrepared)
-        {
-            TextView title = (TextView) mAudioBar.findViewById(R.id.audio_title);
-            title.setText(mArticle.getTitle());
-        }
-    }
-
-
-    private void disableAudioPlayer()
-    {
-        mAudioPlayer.pause();
-    }
-
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser)
-    {
-        super.setUserVisibleHint(isVisibleToUser);
-
-        if (mAudioPlayer != null)
-        {
-            if (isVisibleToUser)
-            {
-                enableAudioPlayer();
-            } else {
-                disableAudioPlayer();
-            }
-        }
-    }
-
-
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy();
-
-        if (mAudioPlayer != null)
-        {
-            Log.d(TAG, "releasing audio player");
-            mAudioPlayer.release();
-            mAudioPlayer = null;
-        }
-    }
 
 
     @Override

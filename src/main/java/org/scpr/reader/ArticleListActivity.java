@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 
-public class ArticleListActivity extends DrawerActivity
+public class ArticleListActivity extends MainActivity
 {
 
     private final static String TAG = "org.scpr.reader.DEBUG.ArticleListActivity";
