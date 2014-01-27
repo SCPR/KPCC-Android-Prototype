@@ -17,6 +17,7 @@ import java.io.IOException;
 public class AudioPlayerFragment extends Fragment
 {
 
+    public static String FRAGMENT_ID = "audio_player_fragment";
     public static String EXTRA_TITLE = "org.scpr.reader.AudioPlayerFragment.EXTRA_TITLE";
     public static String EXTRA_URL = "org.scpr.reader.AudioPlayerFragment.EXTRA_URL";
 
@@ -66,7 +67,7 @@ public class AudioPlayerFragment extends Fragment
 
     public void setAudio(Article article, Audio audio)
     {
-        mAudioPlayer.stop();
+        mAudioPlayer.reset();
         mTitle.setText(article.getTitle());
 
         try

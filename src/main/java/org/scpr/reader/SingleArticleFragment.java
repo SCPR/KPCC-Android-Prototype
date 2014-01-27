@@ -66,8 +66,8 @@ public class SingleArticleFragment extends Fragment
         String articleId = getArguments().getString(EXTRA_ARTICLE_ID);
         mArticle = ArticleCollection.get(getActivity()).getArticle(articleId);
 
-        FragmentManager fm = getFragmentManager();
-        mAudioBar = (AudioPlayerFragment) fm.findFragmentById(R.layout.fragment_audio_player);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        mAudioBar = (AudioPlayerFragment) fm.findFragmentByTag(AudioPlayerFragment.FRAGMENT_ID);
     }
 
 
@@ -133,9 +133,11 @@ public class SingleArticleFragment extends Fragment
         if (mArticle.hasAudio())
         {
             mAudioPlayButton.setVisibility(View.VISIBLE);
-            mAudioPlayButton.setOnClickListener(new View.OnClickListener() {
+            mAudioPlayButton.setOnClickListener(new View.OnClickListener()
+            {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v)
+                {
                     mAudioBar.setAudio(mArticle, mArticle.getAudio().get(0));
                 }
             });

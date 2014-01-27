@@ -41,7 +41,7 @@ public abstract class MainActivity extends FragmentActivity
 
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction()
-            .add(R.layout.fragment_audio_player, new AudioPlayerFragment())
+            .add(R.id.main_frame, new AudioPlayerFragment(), AudioPlayerFragment.FRAGMENT_ID)
             .commit();
 
         mAudioPlayerFragment = (AudioPlayerFragment) fm.findFragmentById(R.layout.fragment_audio_player);
