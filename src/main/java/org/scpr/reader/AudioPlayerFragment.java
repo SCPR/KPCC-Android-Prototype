@@ -27,7 +27,7 @@ public class AudioPlayerFragment extends Fragment
     private TextView mTitle;
     private MediaPlayer mAudioPlayer;
     private ImageView mPlayButton;
-    private ImageView mPauseButton;
+    private ImageView mStopButton;
     private boolean mAudioPrepared;
 
 
@@ -55,7 +55,7 @@ public class AudioPlayerFragment extends Fragment
 
         mTitle = (TextView) v.findViewById(R.id.audio_title);
         mPlayButton = (ImageView) v.findViewById(R.id.audio_btn_play);
-        mPauseButton = (ImageView) v.findViewById(R.id.audio_btn_pause);
+        mStopButton = (ImageView) v.findViewById(R.id.audio_btn_stop);
         mAudioPlayer = new MediaPlayer();
 
         mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -73,16 +73,21 @@ public class AudioPlayerFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                mAudioPlayer.start();
+                if (mAudioPlayer.isPlaying())
+                {
+                    mAudioPlayer.pause();
+                } else {
+                    mAudioPlayer.start();
+                }
             }
         });
 
-        mPauseButton.setOnClickListener(new View.OnClickListener()
+        mStopButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                mAudioPlayer.pause();
+                mAudioPlayer.stop();
             }
         });
 
