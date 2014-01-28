@@ -4,9 +4,11 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.scpr.api.Article;
@@ -17,12 +19,16 @@ import java.io.IOException;
 public class AudioPlayerFragment extends Fragment
 {
 
+    private static String TAG = "org.scpr.reader.DEBUG.AudioPlayerFragment";
+
     public static String FRAGMENT_ID = "audio_player_fragment";
     public static String EXTRA_TITLE = "org.scpr.reader.AudioPlayerFragment.EXTRA_TITLE";
     public static String EXTRA_URL = "org.scpr.reader.AudioPlayerFragment.EXTRA_URL";
 
     private TextView mTitle;
     private MediaPlayer mAudioPlayer;
+    private ImageView mPlayButton;
+    private ImageView mPauseButton;
     private boolean mAudioPrepared;
 
 
@@ -49,15 +55,38 @@ public class AudioPlayerFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_audio_player, parent, false);
 
         mTitle = (TextView) v.findViewById(R.id.audio_title);
-
+        mPlayButton = (ImageView) v.findViewById(R.id.audio_btn_play);
+        mPauseButton = (ImageView) v.findViewById(R.id.audio_btn_pause);
         mAudioPlayer = new MediaPlayer();
+
         mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
         {
             @Override
             public void onPrepared(MediaPlayer mp)
             {
+                Log.d(TAG, "Audio is prepared.");
                 mAudioPrepared = true;
+            }
+        });
+
+        mPlayButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.d(TAG, "Got click for Play Button.");
+                mAudioPlayer.start();
+            }
+        });
+
+        mPauseButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Log.d(TAG, "Got click for Pause Button.");
+                mAudioPlayer.pause();
             }
         });
 
@@ -67,11 +96,11 @@ public class AudioPlayerFragment extends Fragment
 
     public void setAudio(Article article, Audio audio)
     {
-        mAudioPlayer.reset();
         mTitle.setText(article.getTitle());
 
         try
         {
+            mAudioPlayer.reset();
             mAudioPlayer.setDataSource(audio.getUrl());
             mAudioPlayer.prepareAsync();
         } catch(IOException e) {
