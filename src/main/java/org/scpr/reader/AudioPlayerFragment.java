@@ -4,7 +4,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class AudioPlayerFragment extends Fragment
             @Override
             public void onPrepared(MediaPlayer mp)
             {
-                Log.d(TAG, "Audio is prepared.");
                 mAudioPrepared = true;
             }
         });
@@ -75,7 +73,6 @@ public class AudioPlayerFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Log.d(TAG, "Got click for Play Button.");
                 mAudioPlayer.start();
             }
         });
@@ -85,7 +82,6 @@ public class AudioPlayerFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Log.d(TAG, "Got click for Pause Button.");
                 mAudioPlayer.pause();
             }
         });
