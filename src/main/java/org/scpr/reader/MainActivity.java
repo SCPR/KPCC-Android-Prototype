@@ -10,8 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -45,23 +43,6 @@ public abstract class MainActivity extends FragmentActivity
         fm.beginTransaction()
             .add(R.id.main_frame, new AudioPlayerFragment(), AudioPlayerFragment.FRAGMENT_ID)
             .commit();
-
-        mAudioPlayerFragment = (AudioPlayerFragment) fm.findFragmentById(R.layout.fragment_audio_player);
-        Animation anim = AnimationUtils.loadAnimation(this, R.anim.bottom_up);
-        anim.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-                mAudioPlayerFragment.getView().layout();
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {}
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {}
-        });
 
         mTitle = getTitle();
         mDrawerTitle = getTitle();
