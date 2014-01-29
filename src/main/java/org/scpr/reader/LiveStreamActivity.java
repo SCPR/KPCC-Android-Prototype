@@ -26,7 +26,7 @@ public class LiveStreamActivity extends MainActivity
     @Override
     protected int getMainLayoutId()
     {
-        return R.layout.drawer_with_frame_layout;
+        return R.layout.activity_main;
     }
 
 }
