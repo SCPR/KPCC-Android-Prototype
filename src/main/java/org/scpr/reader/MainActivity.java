@@ -19,8 +19,6 @@ public abstract class MainActivity extends FragmentActivity
 
     private final static String TAG = "org.scpr.reader.DEBUG.MainActivity";
 
-    protected abstract int getMainLayoutId();
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
@@ -34,7 +32,7 @@ public abstract class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(getMainLayoutId());
+        setContentView(R.layout.activity_main);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.drawer_menu);
@@ -53,7 +51,6 @@ public abstract class MainActivity extends FragmentActivity
         mMenuItems = new NavDrawerItem[]
         {
             NavMenuSection.create(300, "KPCC Reader"),
-            NavMenuItem.create(301, "Live Stream", "ic_action_next_item", this),
             NavMenuItem.create(302, "All Articles", "ic_action_next_item", this),
 
             NavMenuSection.create(100, "Categories"),
@@ -114,13 +111,6 @@ public abstract class MainActivity extends FragmentActivity
 
         switch (id)
         {
-            // Live Stream
-            case 301:
-                getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, LiveStreamFragment.newInstance())
-                    .commit();
-
-                break;
 
             // All Articles
             case 302:

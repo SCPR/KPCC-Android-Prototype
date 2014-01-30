@@ -25,10 +25,4 @@ public class ArticleListActivity extends MainActivity
         }
     }
 
-    @Override
-    protected int getMainLayoutId()
-    {
-        return R.layout.activity_main;
-    }
-
 }
