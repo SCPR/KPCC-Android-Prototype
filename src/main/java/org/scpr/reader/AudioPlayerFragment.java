@@ -51,7 +51,7 @@ public class AudioPlayerFragment extends Fragment
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.sliding_audio_page, parent, false);
+        View v = inflater.inflate(R.id.audio_bar, parent, false);
 
         mTitle = (TextView) v.findViewById(R.id.audio_title);
         mPlayButton = (ImageView) v.findViewById(R.id.audio_btn_play);

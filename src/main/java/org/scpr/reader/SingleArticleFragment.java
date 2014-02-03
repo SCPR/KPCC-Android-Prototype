@@ -37,7 +37,7 @@ public class SingleArticleFragment extends Fragment
     private Article mArticle;
     private ImageButton mAudioPlayButton;
     private LinearLayout mArticleLayout;
-    private AudioPlayerFragment mAudioBar;
+//    private AudioPlayerFragment mAudioBar;
     private ProgressBar mProgress;
     private TextView mTitle;
     private TextView mBody;
@@ -67,7 +67,7 @@ public class SingleArticleFragment extends Fragment
         mArticle = ArticleCollection.get(getActivity()).getArticle(articleId);
 
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        mAudioBar = (AudioPlayerFragment) fm.findFragmentByTag(AudioPlayerFragment.FRAGMENT_ID);
+//        mAudioBar = (AudioPlayerFragment) fm.findFragmentByTag(AudioPlayerFragment.FRAGMENT_ID);
     }
 
 
@@ -138,7 +138,7 @@ public class SingleArticleFragment extends Fragment
                 @Override
                 public void onClick(View v)
                 {
-                    mAudioBar.setAudio(mArticle, mArticle.getAudio().get(0));
+//                    mAudioBar.setAudio(mArticle, mArticle.getAudio().get(0));
                 }
             });
         }

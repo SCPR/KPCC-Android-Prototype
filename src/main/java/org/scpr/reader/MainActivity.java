@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 
 public abstract class MainActivity extends FragmentActivity
 {
@@ -25,7 +27,6 @@ public abstract class MainActivity extends FragmentActivity
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private NavDrawerItem[] mMenuItems;
-    private AudioPlayerFragment mAudioPlayerFragment;
 
 
     @Override
@@ -37,10 +38,10 @@ public abstract class MainActivity extends FragmentActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.drawer_menu);
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-            .add(R.id.main_frame, new AudioPlayerFragment(), AudioPlayerFragment.FRAGMENT_ID)
-            .commit();
+//        FragmentManager fm = getSupportFragmentManager();
+//        fm.beginTransaction()
+//            .add(R.id.main_frame, new AudioPlayerFragment(), AudioPlayerFragment.FRAGMENT_ID)
+//            .commit();
 
         mTitle = getTitle();
         mDrawerTitle = getTitle();
@@ -100,6 +101,45 @@ public abstract class MainActivity extends FragmentActivity
         };
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.audio_slider);
+        layout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
+        layout.setAnchorPoint(0.3f);
+        layout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener()
+        {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset)
+            {
+                if (slideOffset < 0.2)
+                {
+                    if (getActionBar().isShowing())
+                    {
+                        getActionBar().hide();
+                    }
+                } else {
+                    if (!getActionBar().isShowing())
+                    {
+                        getActionBar().show();
+                    }
+                }
+            }
+
+            @Override
+            public void onPanelExpanded(View panel)
+            {
+            }
+
+            @Override
+            public void onPanelCollapsed(View panel)
+            {
+            }
+
+            @Override
+            public void onPanelAnchored(View panel)
+            {
+            }
+        });
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
     }
