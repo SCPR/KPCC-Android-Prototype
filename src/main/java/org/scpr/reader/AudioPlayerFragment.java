@@ -55,7 +55,6 @@ public class AudioPlayerFragment extends Fragment
 
         mTitle = (TextView) v.findViewById(R.id.audio_title);
         mPlayButton = (ImageView) v.findViewById(R.id.audio_btn_play);
-        mStopButton = (ImageView) v.findViewById(R.id.audio_btn_stop);
         mAudioPlayer = new MediaPlayer();
 
         mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

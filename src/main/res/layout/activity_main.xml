@@ -70,7 +70,7 @@
 
                             <ImageButton
                                 android:id="@+id/audio_btn_play"
-                                android:layout_width="60dp"
+                                android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:background="@null"
                                 android:scaleType="centerInside"
@@ -78,11 +78,11 @@
 
                             <ImageButton
                                 android:id="@+id/audio_btn_next"
-                                android:layout_width="60dp"
+                                android:layout_width="50dp"
                                 android:layout_height="40dp"
                                 android:background="@null"
                                 android:scaleType="centerInside"
-                                android:src="@drawable/ic_media_forward" />
+                                android:src="@drawable/ic_media_next" />
 
                         </LinearLayout>
 
