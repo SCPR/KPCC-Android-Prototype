@@ -30,8 +30,9 @@ public abstract class MainActivity extends FragmentActivity
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private NavDrawerItem[] mMenuItems;
-    private ImageButton mAudioPlayBtn;
     private AudioPlayer mAudioPlayer;
+    private ImageButton mAudioPlayBtn;
+    private ImageButton mAudioStopBtn;
 
 
     @Override
@@ -100,19 +101,30 @@ public abstract class MainActivity extends FragmentActivity
         mAudioPlayer = new AudioPlayer();
 
         mAudioPlayBtn = (ImageButton) findViewById(R.id.audio_btn_play);
+        mAudioStopBtn = (ImageButton) findViewById(R.id.audio_btn_stop);
+
         mAudioPlayBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if (mAudioPlayer.isPlaying())
-                {
-                    mAudioPlayer.stop();
-                } else {
-                    mAudioPlayer.play(getApplicationContext(), Uri.parse(LIVESTREAM_URL));
-                }
+                mAudioPlayer.play(getApplicationContext(), Uri.parse(LIVESTREAM_URL));
+                mAudioPlayBtn.setVisibility(View.GONE);
+                mAudioStopBtn.setVisibility(View.VISIBLE);
             }
         });
+
+        mAudioStopBtn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mAudioPlayer.stop();
+                mAudioStopBtn.setVisibility(View.GONE);
+                mAudioPlayBtn.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.audio_slider);
         layout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));

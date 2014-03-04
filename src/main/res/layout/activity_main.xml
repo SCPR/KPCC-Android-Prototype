@@ -78,12 +78,21 @@
                                 android:src="@drawable/ic_media_play" />
 
                             <ImageButton
-                                android:id="@+id/audio_btn_next"
+                                android:id="@+id/audio_btn_stop"
                                 android:layout_width="50dp"
-                                android:layout_height="40dp"
+                                android:layout_height="50dp"
                                 android:background="@null"
                                 android:scaleType="centerInside"
-                                android:src="@drawable/ic_media_next" />
+                                android:src="@drawable/ic_media_stop"
+                                android:visibility="gone" />
+
+                            <!--<ImageButton-->
+                                <!--android:id="@+id/audio_btn_next"-->
+                                <!--android:layout_width="50dp"-->
+                                <!--android:layout_height="40dp"-->
+                                <!--android:background="@null"-->
+                                <!--android:scaleType="centerInside"-->
+                                <!--android:src="@drawable/ic_media_next" />-->
 
                         </LinearLayout>
 
