@@ -24,13 +24,14 @@
                 android:layout_gravity="bottom"
                 sothree:collapsedHeight="68dp"
                 sothree:shadowHeight="4dp"
-                sothree:dragView="@+id/audio_bar">
+                sothree:dragView="@+id/audio_title">
 
                 <!-- Main Content -->
                 <FrameLayout
                     android:id="@+id/content_frame"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:paddingTop="?android:attr/actionBarSize" />
 
                 <!-- Slide page -->
                 <LinearLayout
@@ -43,13 +44,13 @@
 
                     <!-- Drag content (Audio Bar) -->
                     <LinearLayout
-                        android:id="@id/audio_bar"
+                        android:id="@+id/audio_bar"
                         android:layout_width="match_parent"
                         android:layout_height="68dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/audio_title"
+                            android:id="@id/audio_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="5"
@@ -57,7 +58,7 @@
                             android:gravity="left"
                             android:textColor="@android:color/black"
                             android:textSize="20sp"
-                            android:text="Audio" />
+                            android:text="Live Stream" />
 
                         <LinearLayout
                             android:id="@+id/media_control"
