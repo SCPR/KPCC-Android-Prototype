@@ -3,7 +3,6 @@ package org.scpr.reader;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 
 import java.io.IOException;
 
@@ -14,11 +13,10 @@ public class AudioPlayer
     private MediaPlayer mAudioPlayer;
 
 
-    public void play(Context c, Uri uri)
+    public void play(Context c, String url)
     {
         stop();
-
-        mAudioPlayer = MediaPlayer.create(c, uri);
+        mAudioPlayer = new MediaPlayer();
 
         mAudioPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mAudioPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
@@ -26,7 +24,7 @@ public class AudioPlayer
             @Override
             public void onPrepared(MediaPlayer mp)
             {
-                mAudioPlayer.start();
+                start();
             }
         });
 
@@ -37,6 +35,9 @@ public class AudioPlayer
                 stop();
             }
         });
+
+        setAudio(url);
+
     }
 
 
@@ -68,11 +69,10 @@ public class AudioPlayer
 
     public void setAudio(String url)
     {
-        mAudioPlayer = new MediaPlayer();
+        if (mAudioPlayer == null) return;
 
         try
         {
-            mAudioPlayer.reset();
             mAudioPlayer.setDataSource(url);
             mAudioPlayer.prepareAsync();
         } catch(IOException e) {

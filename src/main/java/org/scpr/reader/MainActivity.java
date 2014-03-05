@@ -1,12 +1,12 @@
 package org.scpr.reader;
 
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -111,6 +111,10 @@ public abstract class MainActivity extends FragmentActivity
             @Override
             public void onClick(View v)
             {
+                // First thing, give the user some immediate feedback
+                mAudioPlayBtn.setVisibility(View.GONE);
+                mAudioStopBtn.setVisibility(View.VISIBLE);
+
                 String url;
 
                 long unixTime = System.currentTimeMillis() / 1000L;
@@ -126,10 +130,7 @@ public abstract class MainActivity extends FragmentActivity
                     url = LIVESTREAM_NOPREROLL_URL;
                 }
 
-
-                mAudioPlayer.play(getApplicationContext(), Uri.parse(url));
-                mAudioPlayBtn.setVisibility(View.GONE);
-                mAudioStopBtn.setVisibility(View.VISIBLE);
+                mAudioPlayer.play(getApplicationContext(), url);
             }
         });
 
@@ -138,9 +139,10 @@ public abstract class MainActivity extends FragmentActivity
             @Override
             public void onClick(View v)
             {
-                mAudioPlayer.stop();
                 mAudioStopBtn.setVisibility(View.GONE);
                 mAudioPlayBtn.setVisibility(View.VISIBLE);
+
+                mAudioPlayer.stop();
             }
         });
 

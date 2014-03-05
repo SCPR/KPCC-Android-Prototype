@@ -52,8 +52,8 @@
                         <TextView
                             android:id="@id/audio_title"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="5"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:padding="5dp"
                             android:gravity="left"
                             android:textColor="@android:color/black"
@@ -62,9 +62,8 @@
 
                         <LinearLayout
                             android:id="@+id/media_control"
-                            android:layout_width="300dp"
+                            android:layout_width="50dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="6"
                             android:orientation="horizontal"
                             android:layout_gravity="right"
                             android:gravity="right|center">
@@ -74,7 +73,6 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:background="@null"
-                                android:scaleType="centerInside"
                                 android:src="@drawable/ic_media_play" />
 
                             <ImageButton
