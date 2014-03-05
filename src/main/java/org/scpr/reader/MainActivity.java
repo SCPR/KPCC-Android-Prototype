@@ -6,7 +6,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,7 +101,6 @@ public abstract class MainActivity extends FragmentActivity
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mAudioPlayer = new AudioPlayer();
-
         mAudioPlayBtn = (ImageButton) findViewById(R.id.audio_btn_play);
         mAudioStopBtn = (ImageButton) findViewById(R.id.audio_btn_stop);
 
