@@ -21,8 +21,11 @@ public abstract class MainActivity extends FragmentActivity
 {
 
     private final static String TAG = "org.scpr.reader.DEBUG.MainActivity";
+    private final static String PREFS_NAME = "org.scpr.reader.Preferences";
+    private final static long PREROLL_THRESHOLD = 600L;
 
-    public final static String LIVESTREAM_URL = "http://live.scpr.org";
+    public final static String LIVESTREAM_URL = "http://live.scpr.org/kpcclive";
+    public final static String LIVESTREAM_NOPREROLL_URL = "http://live.scpr.org/kpcclive?preskip=true";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -108,7 +111,23 @@ public abstract class MainActivity extends FragmentActivity
             @Override
             public void onClick(View v)
             {
-                mAudioPlayer.play(getApplicationContext(), Uri.parse(LIVESTREAM_URL));
+                String url;
+
+                long unixTime = System.currentTimeMillis() / 1000L;
+
+                // If the last stream was more than PREROLL_THRESHOLD seconds ago, then
+                // skip the preroll.
+                // Otherwise, set the last preroll to right now and send them preroll stream.
+                if (KpccReaderApplication.LIVESTREAM_LAST_PREROLL < (unixTime - PREROLL_THRESHOLD))
+                {
+                    KpccReaderApplication.LIVESTREAM_LAST_PREROLL = unixTime;
+                    url = LIVESTREAM_URL;
+                } else {
+                    url = LIVESTREAM_NOPREROLL_URL;
+                }
+
+
+                mAudioPlayer.play(getApplicationContext(), Uri.parse(url));
                 mAudioPlayBtn.setVisibility(View.GONE);
                 mAudioStopBtn.setVisibility(View.VISIBLE);
             }

@@ -8,6 +8,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class KpccReaderApplication extends Application
 {
+    public static long LIVESTREAM_LAST_PREROLL = 0L;
+
     @Override
     public void onCreate()
     {
