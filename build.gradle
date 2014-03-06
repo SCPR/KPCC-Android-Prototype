@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'android'
+apply from: 'release/build.gradle'
 
 android {
     buildToolsVersion '19'
