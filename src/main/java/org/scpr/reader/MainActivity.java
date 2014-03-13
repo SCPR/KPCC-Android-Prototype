@@ -23,7 +23,7 @@ public abstract class MainActivity extends FragmentActivity
     private final static String PREFS_NAME = "org.scpr.reader.Preferences";
     private final static long PREROLL_THRESHOLD = 600L;
 
-    public final static String LIVESTREAM_URL = "http://live.scpr.org/aac";
+    public final static String LIVESTREAM_URL = "http://live.scpr.org/kpcclive";
     public final static String LIVESTREAM_NOPREROLL_URL = LIVESTREAM_URL + "?preskip=true";
 
     private DrawerLayout mDrawerLayout;
