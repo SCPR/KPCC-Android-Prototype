@@ -43,21 +43,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <ImageButton
-                android:id="@+id/audio_btn_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/btn_play"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-
+        <include layout="@layout/single_article_audio" />
         <include layout="@layout/single_article_body" />
 
     </LinearLayout>
