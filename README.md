@@ -3,10 +3,8 @@
 ## Releasing
 For each release (anything that gets pushed to the Play store in any form):
 * Bump the versionName and versionCode appropriately in AndroidManifest.xml.
-* Generate the APK with `./gradlew assembleRelease`. You'll need proper credentials to do this.
-* Tag the release in git (see `git tag` for the format).
-* Push to git (including the tags).
-* Upload the APK to the Play store in the appropriate section (Alpha, Beta, Production).
+* Run the `build-release` script.
+* Upload the new APK to the Play store in the appropriate section (Alpha, Beta, Production).
 * Make an announcement in the appropriate Google Group to let testers know about the update.
 
 ## Version Name
