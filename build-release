@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+VERSION=$(ruby -e "puts File.read('src/main/AndroidManifest.xml').match(/android:versionName=\"(.+?)\"/)[1]")
+
+if (( $(git status -s | wc -l) > 0 )); then
+    echo "You have uncommited changes. Please commit all changes and run this script again."
+    exit 1
+fi
+
+read -p "Building and Releasing $VERSION. Is this correct? (y/n) "
+if [[ $REPLY == y ]]; then
+    echo
+    echo "***Building release APK..."
+    ./gradlew assembleRelease
+
+    echo
+    echo "***Copying release APK to ./release/apk/KPCC-Android-$VERSION.apk ..."
+    cp ./build/apk/KPCC-Android-release.apk ./release/apk/KPCC-Android-$VERSION.apk
+
+    echo "Tagging this release as v$VERSION ..."
+    git tag v$VERSION
+
+    echo "Pushing commits to origin/master"
+    git push origin master
+
+    echo "Pushing tags to origin/master"
+    git push --tags origin/master
+
+    echo "Okay! Now upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
+fi
