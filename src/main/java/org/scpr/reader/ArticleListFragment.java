@@ -1,7 +1,6 @@
 package org.scpr.reader;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -25,7 +25,7 @@ import org.scpr.api.Article;
 import java.util.ArrayList;
 
 
-public class ArticleListFragment extends Fragment
+public class ArticleListFragment extends SherlockFragment
 {
     public final static String EXTRA_REQUEST_PARAMS = "org.scpr.reader.request_params";
     public final static String EXTRA_LAST_PAGE = "org.scpr.reader.last_page";

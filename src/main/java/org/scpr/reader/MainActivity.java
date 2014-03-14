@@ -3,20 +3,20 @@ package org.scpr.reader;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 
-public abstract class MainActivity extends FragmentActivity
+public abstract class MainActivity extends SherlockFragmentActivity
 {
 
     private final static String TAG = "org.scpr.reader.DEBUG.MainActivity";
@@ -87,13 +87,13 @@ public abstract class MainActivity extends FragmentActivity
         {
             public void onDrawerClosed(View view)
             {
-                getActionBar().setTitle(mTitle);
+                getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView)
             {
-                getActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setTitle(mDrawerTitle);
                 invalidateOptionsMenu();
             }
         };
@@ -155,14 +155,14 @@ public abstract class MainActivity extends FragmentActivity
             {
                 if (slideOffset < 0.2)
                 {
-                    if (getActionBar().isShowing())
+                    if (getSupportActionBar().isShowing())
                     {
-                        getActionBar().hide();
+                        getSupportActionBar().hide();
                     }
                 } else {
-                    if (!getActionBar().isShowing())
+                    if (!getSupportActionBar().isShowing())
                     {
-                        getActionBar().show();
+                        getSupportActionBar().show();
                     }
                 }
             }
@@ -184,8 +184,8 @@ public abstract class MainActivity extends FragmentActivity
         });
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
 
@@ -265,18 +265,6 @@ public abstract class MainActivity extends FragmentActivity
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if (mDrawerToggle.onOptionsItemSelected(item))
-        {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {
         if (keyCode == KeyEvent.KEYCODE_MENU)
@@ -292,6 +280,27 @@ public abstract class MainActivity extends FragmentActivity
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Workaround for ActionBarSherlock not supporting ActionBarDrawer
+        // The onOptionsItemSelected method from Sherlock expects its own MenuItem,
+        // but the one from ActionBarDrawer expects android.view.MenuItem, so we can't
+        // chain these calls.
+        if (item.getItemId() == android.R.id.home)
+        {
+            if (mDrawerLayout.isDrawerOpen(mDrawerList))
+            {
+                mDrawerLayout.closeDrawer(mDrawerList);
+            } else {
+                mDrawerLayout.openDrawer(mDrawerList);
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

@@ -4,14 +4,10 @@ import android.annotation.TargetApi;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -20,12 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.scpr.api.Article;
 
 
-public class SingleArticleFragment extends Fragment
+public class SingleArticleFragment extends SherlockFragment
 {
 
     private static final String TAG = "org.scpr.reader.DEBUG.SingleArticleFragment";
@@ -127,7 +124,7 @@ public class SingleArticleFragment extends Fragment
 
         if (mArticle.hasAudio())
         {
-            mAudioPlayButton.setVisibility(View.VISIBLE);
+//            mAudioPlayButton.setVisibility(View.VISIBLE);
             mAudioPlayButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override
@@ -139,33 +136,6 @@ public class SingleArticleFragment extends Fragment
         }
 
         return v;
-    }
-
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case android.R.id.home:
-                if (hasParentActivity())
-                {
-                    NavUtils.navigateUpFromSameTask(getActivity());
-                }
-
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
 

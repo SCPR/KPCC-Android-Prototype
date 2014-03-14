@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class SingleArticleViewPager extends Fragment
+public class SingleArticleViewPager extends SherlockFragment
 {
 
     private final static String TAG = "org.scpr.reader.DEBUG.SingleArticleViewPager";
