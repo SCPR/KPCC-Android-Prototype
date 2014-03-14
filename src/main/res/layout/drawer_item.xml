@@ -24,4 +24,5 @@
         android:layout_toRightOf="@id/nav_menu_item_icon"
         android:gravity="center_vertical"
         android:text="@string/placeholder_nav_item" />
+
 </RelativeLayout>

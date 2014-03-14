@@ -68,9 +68,6 @@ public class SingleArticleViewPager extends SherlockFragment
 
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActivity().getActionBar().setHomeButtonEnabled(true);
-
         View v = inflater.inflate(R.layout.activity_single_article, parent, false);
         mViewPager = (ViewPager) v.findViewById(R.id.single_article_view_pager);
 

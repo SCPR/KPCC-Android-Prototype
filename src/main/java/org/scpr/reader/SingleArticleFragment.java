@@ -1,10 +1,7 @@
 package org.scpr.reader;
 
-import android.annotation.TargetApi;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -63,19 +60,10 @@ public class SingleArticleFragment extends SherlockFragment
     }
 
 
-    @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_article, parent, false);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-        {
-            if (hasParentActivity())
-            {
-                getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-            }
-        }
 
         mAudioPlayButton = (ImageButton) v.findViewById(R.id.audio_btn_play);
         mProgress = (ProgressBar) v.findViewById(R.id.article_body_progress);
@@ -136,12 +124,6 @@ public class SingleArticleFragment extends SherlockFragment
         }
 
         return v;
-    }
-
-
-    private boolean hasParentActivity()
-    {
-        return NavUtils.getParentActivityName(getActivity()) != null;
     }
 
 }
