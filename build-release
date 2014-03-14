@@ -17,13 +17,13 @@ if [[ $REPLY == y ]]; then
     echo "***Copying release APK to ./release/apk/KPCC-Android-$VERSION.apk ..."
     cp ./build/apk/KPCC-Android-release.apk ./release/apk/KPCC-Android-$VERSION.apk
 
-    echo "Tagging this release as v$VERSION ..."
+    echo "***Tagging this release as v$VERSION ..."
     git tag v$VERSION
 
-    echo "Pushing commits to origin/master"
+    echo "***Pushing commits to origin/master"
     git push origin master
 
-    echo "Pushing tags to origin/master"
+    echo "***Pushing tags to origin/master"
     git push --tags origin/master
 
     echo "Okay! Now upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
