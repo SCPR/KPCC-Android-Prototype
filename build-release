@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
+set -e
+
 VERSION=$(ruby -e "puts File.read('src/main/AndroidManifest.xml').match(/android:versionName=\"(.+?)\"/)[1]")
 
 if (( $(git status -s | wc -l) > 0 )); then
-    echo "You have uncommited changes. Please commit all changes and run this script again."
+    echo "You have uncommitted changes. Please commit all changes and run this script again."
     exit 1
 fi
 
+echo "***Linting..."
+./gradlew lintRelease
+
+echo
 read -p "Building and Releasing $VERSION. Is this correct? (y/n) "
 if [[ $REPLY == y ]]; then
     echo
