@@ -18,6 +18,7 @@
         android:paddingRight="10dp"
         android:linksClickable="true"
         android:fontFamily="serif"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:text="@string/placeholder_article_body" />
 
 </RelativeLayout>

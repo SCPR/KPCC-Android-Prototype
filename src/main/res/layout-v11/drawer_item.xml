@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--
+    activatedBackgroundIndicator is only available on API 11+
+    so we need this file for 11+ only. The only difference in it
+    is that activatedBackgroundIndicator is present, but is not
+    present in the main layout file.
+-->
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/drawer_list_item_height"
     android:paddingRight="10dp"
-    android:background="@android:color/white"
+    android:background="?android:attr/activatedBackgroundIndicator"
     android:gravity="center_vertical">
 
     <ImageView

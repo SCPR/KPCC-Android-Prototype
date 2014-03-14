@@ -1,11 +1,13 @@
 <resources>
 
     <string name="app_name">KPCC for Android</string>
-    <string name="articles_title">Articles</string>
     <string name="articles_loading">Loading Articles&#8230;</string>
 
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
 
     <string name="placeholder_article_title">Neiman Marcus confirms thieves stole customers\' information, made unauthorized charges</string>
     <string name="placeholder_article_short_title">Neiman Marcus confirms thieves stole customers\' information</string>
@@ -15,7 +17,5 @@
     <string name="placeholder_asset_description">PHOTO DESCRIPTION</string>
     <string name="placeholder_nav_section">SECTION</string>
     <string name="placeholder_nav_item">ITEM</string>
-
-    <string name="test">TEST</string>
 
 </resources>

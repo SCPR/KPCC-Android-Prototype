@@ -31,7 +31,7 @@
                     android:id="@+id/content_frame"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="?android:attr/actionBarSize" />
+                    android:paddingTop="?attr/actionBarSize" />
 
                 <!-- Slide page -->
                 <LinearLayout
@@ -51,7 +51,7 @@
 
                         <TextView
                             android:id="@id/audio_title"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:padding="5dp"
@@ -60,6 +60,7 @@
                             android:textSize="20sp"
                             android:text="Live Stream" />
 
+                        <!-- Audio Buttons -->
                         <LinearLayout
                             android:id="@+id/media_control"
                             android:layout_width="50dp"
