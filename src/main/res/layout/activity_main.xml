@@ -74,7 +74,8 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:background="@null"
-                                android:src="@drawable/ic_media_play" />
+                                android:contentDescription="@string/play"
+                                android:src="@drawable/btn_play" />
 
                             <ImageButton
                                 android:id="@+id/audio_btn_stop"
@@ -82,7 +83,8 @@
                                 android:layout_height="50dp"
                                 android:background="@null"
                                 android:scaleType="centerInside"
-                                android:src="@drawable/ic_media_stop"
+                                android:contentDescription="@string/stop"
+                                android:src="@drawable/btn_stop"
                                 android:visibility="gone" />
 
                         </LinearLayout>
