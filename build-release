@@ -10,13 +10,11 @@ if (( $(git status -s | wc -l) > 0 )); then
 fi
 
 echo "*** Linting..."
-echo
 ./gradlew lintRelease
 
 echo
 read -p "*** Building and Releasing $VERSION. Is this correct? (y/n) "
 if [[ $REPLY == y ]]; then
-    echo
     echo "*** Building release APK..."
     ./gradlew assembleRelease
 
@@ -24,17 +22,15 @@ if [[ $REPLY == y ]]; then
     echo "*** Copying release APK to ./release/apk/KPCC-Android-$VERSION.apk ..."
     cp ./build/apk/KPCC-Android-release.apk ./release/apk/KPCC-Android-$VERSION.apk
 
-    echo
     echo "*** Tagging this release as v$VERSION ..."
     git tag v$VERSION
 
-    echo
     echo "*** Pushing commits to origin/master"
     git push origin master
 
     echo
     echo "*** Pushing tags to origin/master"
-    git push --tags origin/master
+    git push --tags origin master
 
     echo
     echo "Okay! Now upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
