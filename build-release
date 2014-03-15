@@ -33,5 +33,7 @@ if [[ $REPLY == y ]]; then
     git push --tags origin master
 
     echo
-    echo "Okay! Now upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
+    echo "Okay! Next steps:"
+    echo "  * Upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
+    echo "  * Post to the appropriate Google Group about the release."
 fi
