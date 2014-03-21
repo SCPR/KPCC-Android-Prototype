@@ -35,5 +35,6 @@ if [[ $REPLY == y ]]; then
     echo
     echo "Okay! Next steps:"
     echo "  * Upload ./release/apk/KPCC-Android-$VERSION.apk to Google Play."
+    echo "  * Upload to media.scpr.org/android/"
     echo "  * Post to the appropriate Google Group about the release."
 fi
